@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Your Property - Dolza Real Properties & Estate Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+            margin: 40px 0;
+        }
+        
+        .property-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .file-upload input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: var(--transition);
+        }
+        
+        .file-upload-label:hover {
+            border-color: var(--accent-gold);
+            background-color: #fffbeb;
+        }
+        
+        .image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .preview-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--light-gray);
+        }
+        
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-progress {
+            margin-bottom: 30px;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ddd;
+            z-index: 1;
+        }
+        
+        .progress-steps .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 700;
+        }
+        
+        .step.active .step-number {
+            background: var(--accent-gold);
+            color: var(--primary-navy);
+        }
+        
+        .step.completed .step-number {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        /* Auth styles */
+        #authCheck {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        #authCheck .auth-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        #authCheck h2 {
+            color: var(--primary-navy);
+            margin-bottom: 20px;
+        }
+        
+        #authCheck p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-main">DOLZA</span>
+                <span class="logo-sub">Real Properties & Estate Agency</span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <button class="list-property">Post Property</button>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>List Your Property</h1>
+            <h2>Reach Thousands of Potential Buyers Across Malawi</h2>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Auth Check -->
+        <div id="authCheck">
+            <div class="auth-container">
+                <h2>Authentication Required</h2>
+                <p>You need to be authenticated to list properties. Please login to continue.</p>
+                <button onclick="window.location.href='admin.html'" class="btn-primary" style="padding: 15px 30px; font-size: 1.1rem;">Login to Admin Panel</button>
+            </div>
+        </div>
+        
+        <div id="propertyFormContainer" class="property-form">
+            <div class="success-message" id="successMessage">
+                ✅ Your property listing has been submitted successfully! Our team will review and publish it within 24 hours.
+            </div>
+            
+            <form id="propertyForm">
+                <div class="form-progress">
+                    <div class="progress-steps">
+                        <div class="step active" id="step1">
+                            <div class="step-number">1</div>
+                            <span>Basic Info</span>
+                        </div>
+                        <div class="step" id="step2">
+                            <div class="step-number">2</div>
+                            <span>Details</span>
+                        </div>
+                        <div class="step" id="step3">
+                            <div class="step-number">3</div>
+                            <span>Photos</span>
+                        </div>
+                        <div class="step" id="step4">
+                            <div class="step-number">4</div>
+                            <span>Submit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="propertyName">Property Name*</label>
+                        <input type="text" id="propertyName" name="propertyName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyType">Property Type*</label>
+                        <select id="propertyType" name="propertyType" required>
+                            <option value="">Select Type</option>
+                            <option value="land">Land for Sale</option>
+                            <option value="farm">Farm</option>
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="rental">Rental</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="location">Location*</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price (MWK)*</label>
+                        <input type="number" id="price" name="price" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bedrooms">Bedrooms</label>
+                        <input type="number" id="bedrooms" name="bedrooms" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bathrooms">Bathrooms</label>
+                        <input type="number" id="bathrooms" name="bathrooms" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Size (sqm/acres)</label>
+                        <input type="text" id="size" name="size" placeholder="e.g., 1200sqm or 5 acres">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="description">Property Description*</label>
+                        <textarea id="description" name="description" required placeholder="Describe your property in detail..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label>Property Images*</label>
+                        <div class="file-upload">
+                            <input type="file" id="propertyImages" multiple accept="image/*">
+                            <label for="propertyImages" class="file-upload-label">
+                                <div>📷 Click to upload images or drag and drop<br><small>Max 10 images, 5MB each</small></div>
+                            </label>
+                        </div>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactName">Your Name*</label>
+                        <input type="text" id="contactName" name="contactName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Phone Number*</label>
+                        <input type="tel" id="contactPhone" name="contactPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email Address*</label>
+                        <input type="email" id="contactEmail" name="contactEmail" required>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; text-align: center;">
+                    <button type="submit" class="btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">Submit Property Listing</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 40px;">Why List With Dolza?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Wide Audience</h3>
+                    <p>Reach potential buyers from across Salima, Lilongwe, Blantyre, and beyond through our extensive network.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="service-icon">💰</div>
+                    <h3>No Commission Fees</h3>
+                    <p>List your property for free. We only charge a small listing fee, no commission on sales.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="service-icon">📸</div>
+                    <h3>Professional Photography</h3>
+                    <p>Our team can provide professional photography services to showcase your property at its best.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Mobile Optimized</h3>
+                    <p>Your listing will be visible on all devices, ensuring maximum exposure to potential buyers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="logo">
+                        <span class="logo-main">DOLZA</span>
+                        <span class="logo-sub">Real Properties & Estate Agency</span>
+                    </div>
+                    <p>Your trusted partner for real estate solutions in Malawi. Buy · Build · Invest with confidence.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📱</a>
+                        <a href="#" class="social-icon">📘</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="properties.html">Properties</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="list-property.html">List Property</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">We Sell Properties</a></li>
+                        <li><a href="#">We Buy Properties</a></li>
+                        <li><a href="#">Land Surveying</a></li>
+                        <li><a href="#">Title Deed Processing</a></li>
+                        <li><a href="#">Business Advertisement</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>📍 Salima Office, Malawi</li>
+                        <li>📞 +265 994 369 985</li>
+                        <li>📞 +265 882 995 600</li>
+                        <li>✉️ dolzaestateagency@gmail.com</li>
+                        <li>📘 Dolza real properties & estate agency</li>
+                    </ul>
+                    <div class="hours">
+                        <h4>Working Hours</h4>
+                        <p>Mon-Fri: 8:00 AM - 5:00 PM<br>
+                        Sat: 9:00 AM - 1:00 PM<br>
+                        Sun: Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2026 Dolza Real Properties & Estate Agency. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top">↑</button>
+    <button class="whatsapp-float" onclick="window.open('https://wa.me/265994369985', '_blank')">
+        💬
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            checkAuthentication();
+            
+            // Hamburger Menu Toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+                
+                // Close menu when clicking a nav link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+            
+            // Sticky Navigation
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.navbar');
+                if (navbar) {
+                    if (window.scrollY > 100) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                }
+            });
+            
+            // Back to Top Button
+            const backToTop = document.querySelector('.back-to-top');
+            if (backToTop) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        backToTop.classList.add('visible');
+                    } else {
+                        backToTop.classList.remove('visible');
+                    }
+                });
+                
+                backToTop.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Image Upload and Preview
+            const imageInput = document.getElementById('propertyImages');
+            const imagePreview = document.getElementById('imagePreview');
+            let uploadedImages = [];
+            
+            imageInput.addEventListener('change', function(e) {
+                const files = Array.from(e.target.files);
+                
+                files.forEach(file => {
+                    if (uploadedImages.length < 10) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const imageData = {
+                                id: Date.now() + Math.random(),
+                                url: e.target.result,
+                                file: file
+                            };
+                            uploadedImages.push(imageData);
+                            displayImages();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+            
+            function displayImages() {
+                imagePreview.innerHTML = uploadedImages.map(img => `
+                    <div class="preview-item">
+                        <img src="${img.url}" alt="Property image">
+                        <button type="button" class="remove-image" onclick="removeImage(${img.id})">×</button>
+                    </div>
+                `).join('');
+            }
+            
+            window.removeImage = function(id) {
+                uploadedImages = uploadedImages.filter(img => img.id !== id);
+                displayImages();
+            };
+            
+            // Form Submission
+            const propertyForm = document.getElementById('propertyForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            propertyForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate required fields
+                const requiredFields = propertyForm.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.style.borderColor = '#ff4444';
+                    } else {
+                        field.style.borderColor = '#ddd';
+                    }
+                });
+                
+                if (!uploadedImages.length) {
+                    isValid = false;
+                    alert('Please upload at least one property image.');
+                    return;
+                }
+                
+                if (!isValid) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                // Save property to localStorage with pending status
+                saveProperty();
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                propertyForm.style.display = 'none';
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+                
+                // Reset form after 5 seconds
+                setTimeout(() => {
+                    propertyForm.reset();
+                    uploadedImages = [];
+                    displayImages();
+                    propertyForm.style.display = 'block';
+                    successMessage.style.display = 'none';
+                }, 5000);
+            });
+        });
+        
+        // Check if user is authenticated
+        function checkAuthentication() {
+            const isAuthenticated = localStorage.getItem('adminAuthenticated') === 'true';
+            
+            if (isAuthenticated) {
+                // User is authenticated, show form
+                document.getElementById('authCheck').style.display = 'none';
+                document.getElementById('propertyFormContainer').style.display = 'block';
+            } else {
+                // User is not authenticated, show auth check
+                document.getElementById('authCheck').style.display = 'block';
+                document.getElementById('propertyFormContainer').style.display = 'none';
+            }
+        }
+        
+        // Save property to localStorage
+        function saveProperty() {
+            const properties = JSON.parse(localStorage.getItem('properties')) || [];
+            
+            const propertyData = {
+                id: Date.now().toString(),
+                name: document.getElementById('propertyName').value,
+                type: document.getElementById('propertyType').value,
+                location: document.getElementById('location').value,
+                price: parseInt(document.getElementById('price').value),
+                bedrooms: document.getElementById('bedrooms').value || 0,
+                bathrooms: document.getElementById('bathrooms').value || 0,
+                size: document.getElementById('size').value,
+                description: document.getElementById('description').value,
+                contactName: document.getElementById('contactName').value,
+                contactPhone: document.getElementById('contactPhone').value,
+                contactEmail: document.getElementById('contactEmail').value,
+                status: 'pending', // Default status is pending
+                createdAt: new Date().toISOString(),
+                images: uploadedImages.map(img => img.url)
+            };
+            
+            properties.push(propertyData);
+            localStorage.setItem('properties', JSON.stringify(properties));
+        }
+    </script>
+</body>
+</html>

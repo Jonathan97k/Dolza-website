@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dolza Real Properties & Estate Agency | Salima, Malawi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+
+        /* ══ HERO SLIDESHOW ══ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #0A152A;
+        }
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 0;
+        }
+        .hero-slide.active { opacity: 1; }
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(10,21,42,0.72), rgba(27,42,74,0.65));
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            max-width: 860px;
+        }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 14px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+        }
+        .hero-content h2 {
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+        .animated-text span {
+            display: none;
+            color: #F0B429;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+        .animated-text span.active {
+            display: inline-block;
+            animation: fadeInUp 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .hero-buttons { margin-top: 28px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .hero-buttons .btn-primary,
+        .hero-buttons .btn-secondary {
+            padding: 14px 34px;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hero-buttons .btn-primary { background: #F0B429; color: #1B2A4A; }
+        .hero-buttons .btn-primary:hover { background: #d9a020; transform: translateY(-2px); }
+        .hero-buttons .btn-secondary { background: transparent; color: white; border: 2px solid white; }
+        .hero-buttons .btn-secondary:hover { background: white; color: #1B2A4A; transform: translateY(-2px); }
+
+        /* slide dots */
+        .slide-dots {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            gap: 9px;
+        }
+        .slide-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .slide-dot.active { background: #F0B429; transform: scale(1.3); }
+
+        /* ══ SEARCH BAR ══ */
+        .search-bar {
+            background: #1B2A4A;
+            padding: 28px 0;
+        }
+        .search-form {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .search-dropdown {
+            padding: 13px 18px;
+            border: 2px solid rgba(240,180,41,0.4);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.07);
+            color: #000;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+            min-width: 180px;
+            transition: border-color 0.3s;
+        }
+        .search-dropdown option { background: #1B2A4A; color: #000; }
+        .search-dropdown:focus { border-color: #F0B429; }
+        .btn-search {
+            padding: 13px 36px;
+            background: #F0B429;
+            color: #1B2A4A;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        .btn-search:hover { background: #d9a020; transform: translateY(-2px); }
+
+        /* ══ LOGO ══ */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+        .logo-image {
+            height: 90px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+        .logo-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #F0B429;
+            letter-spacing: 2px;
+        }
+        .logo-sub {
+            font-size: 0.72rem;
+            color: #ccc;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ══ PROPERTY CARDS ══ */
+        .property-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #1B2A4A, #0A152A);
+        }
+        .property-image img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .property-card:hover .property-image img { transform: scale(1.05); }
+        .property-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .property-card:hover { transform: translateY(-6px); box-shadow: 0 12px 35px rgba(0,0,0,0.15); }
+        .property-card h3 { padding: 14px 16px 4px; font-family: 'Playfair Display', serif; color: #1B2A4A; font-size: 1.05rem; }
+        .property-location { padding: 0 16px 6px; color: #777; font-size: 0.88rem; }
+        .property-price { padding: 0 16px 6px; color: #F0B429; font-weight: 800; font-size: 1.1rem; font-family: 'Playfair Display', serif; }
+        .property-details { padding: 0 16px 10px; color: #555; font-size: 0.85rem; }
+        .btn-view {
+            display: block;
+            margin: 0 16px 16px;
+            padding: 10px;
+            background: #1B2A4A;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s;
+            width: calc(100% - 32px);
+        }
+        .btn-view:hover { background: #F0B429; color: #1B2A4A; }
+        .property-badge {
+            position: absolute;
+            top: 12px; left: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .property-badge.sale { background: #F0B429; color: #1B2A4A; }
+
+        /* no results */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            color: #777;
+            font-size: 1.1rem;
+            grid-column: 1 / -1;
+        }
+        .no-results span { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+        /* ══ STAT COUNTERS ══ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #F0B429;
+            line-height: 1;
+            display: block;
+        }
+        .stat-card p {
+            color: #1B2A4A;
+            font-weight: 700;
+            margin-top: 8px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ══ CATEGORIES ══ */
+        .property-categories {
+            padding: 60px 0;
+            background: #fff;
+        }
+        .property-categories h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            color: #1B2A4A;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+        .category-card {
+            background: #f8f9fa;
+            border: 2px solid #e8e8e8;
+            border-radius: 14px;
+            padding: 30px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .category-card:hover {
+            background: #1B2A4A;
+            border-color: #1B2A4A;
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(27,42,74,0.2);
+        }
+        .category-card:hover h3,
+        .category-card:hover p { color: white; }
+        .category-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .category-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: #1B2A4A;
+            font-size: 1rem;
+            margin-bottom: 6px;
+            transition: color 0.3s;
+        }
+        .category-card p {
+            color: #F0B429;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin: 0;
+            transition: color 0.3s;
+        }
+        @media (max-width: 900px) { .categories-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 560px) { .categories-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        /* ══ VALUATION ══ */
+        .valuation-section {
+            background: linear-gradient(135deg, #1B2A4A 0%, #0A152A 100%);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .valuation-section::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: rgba(240,180,41,0.08);
+        }
+        .valuation-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -40px;
+            width: 250px; height: 250px;
+            border-radius: 50%;
+            background: rgba(240,180,41,0.05);
+        }
+        .valuation-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .valuation-text h2 {
+            color: #F0B429;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .valuation-text p { color: #ccc; font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; }
+        .valuation-perks { list-style: none; padding: 0; margin: 25px 0 0; }
+        .valuation-perks li {
+            color: #fff;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .valuation-perks li::before {
+            content: '';
+            width: 20px; height: 20px; min-width: 20px;
+            background: #F0B429;
+            border-radius: 50%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B2A4A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+            background-size: 12px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .valuation-form {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .valuation-form h3 {
+            color: #1B2A4A;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+        .valuation-form .sub { color: #777; font-size: 0.9rem; margin-bottom: 25px; }
+        .val-group { margin-bottom: 16px; }
+        .val-group label {
+            display: block;
+            color: #1B2A4A;
+            font-weight: 700;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .val-group input,
+        .val-group select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            color: #333;
+            outline: none;
+            box-sizing: border-box;
+            background: #fafafa;
+            transition: border-color 0.3s;
+        }
+        .val-group input:focus,
+        .val-group select:focus { border-color: #F0B429; background: white; }
+        .val-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-valuation {
+            width: 100%;
+            padding: 16px;
+            background: #F0B429;
+            color: #1B2A4A;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+        }
+        .btn-valuation:hover {
+            background: #d9a020;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(240,180,41,0.4);
+        }
+        .val-success {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #d4edda;
+            border-radius: 8px;
+            color: #155724;
+            font-weight: 700;
+            margin-top: 15px;
+            border: 2px solid #c3e6cb;
+        }
+        @media (max-width: 768px) {
+            .valuation-inner { grid-template-columns: 1fr; gap: 40px; }
+            .valuation-text h2 { font-size: 1.8rem; }
+            .val-row { grid-template-columns: 1fr; }
+        }
+
+        /* ══ WHATSAPP BUBBLE ══ */
+        .wa-widget {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+        .wa-greeting {
+            background: white;
+            border-radius: 16px 16px 4px 16px;
+            padding: 16px 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            max-width: 250px;
+            display: none;
+            position: relative;
+            animation: popIn 0.3s ease;
+        }
+        .wa-greeting.show { display: block; }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.8) translateY(10px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .wa-greeting-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .wa-avatar {
+            width: 38px; height: 38px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .wa-name { color: #1B2A4A; font-weight: 700; font-size: 0.9rem; display: block; }
+        .wa-status { color: #25D366; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; }
+        .wa-dot { width: 7px; height: 7px; background: #25D366; border-radius: 50%; display: inline-block; }
+        .wa-greeting p { color: #444; font-size: 0.88rem; line-height: 1.5; margin: 0 0 12px; }
+        .wa-chat-link {
+            display: block;
+            background: #25D366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .wa-chat-link:hover { background: #1ebe5d; }
+        .wa-close {
+            position: absolute;
+            top: 8px; right: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #aaa;
+            line-height: 1;
+            padding: 2px 6px;
+        }
+        .wa-btn {
+            width: 62px; height: 62px;
+            background: #25D366;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .wa-btn:hover { transform: scale(1.1); }
+        .wa-btn svg { width: 32px; height: 32px; }
+        .wa-btn::before, .wa-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(37,211,102,0.3);
+            animation: waPulse 2s ease-out infinite;
+        }
+        .wa-btn::after { animation-delay: 0.8s; }
+        @keyframes waPulse {
+            0%   { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+        .wa-badge {
+            position: absolute;
+            top: -4px; right: -4px;
+            width: 20px; height: 20px;
+            background: #ff3b30;
+            border-radius: 50%;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        /* ══ SCROLL REVEAL ══ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        .whatsapp-float { display: none !important; }
+
+        /* ══ PROPERTIES SECTION ══ */
+        .featured-properties { padding: 70px 0; background: #f8f9fa; }
+        .featured-properties h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            color: #1B2A4A;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        @media (max-width: 900px) { .properties-grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 580px) { .properties-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-content h1 { font-size: 1.8rem; }
+            .logo-image { height: 60px; }
+            .logo-main { font-size: 1.4rem; }
+        }
+
+        section { margin: 0; padding-top: 60px; padding-bottom: 60px; }
+        .search-bar { padding-top: 0; padding-bottom: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Dolza Real Properties" class="logo-image">
+                <div class="logo-text">
+                    <span class="logo-main">DOLZA</span>
+                    <span class="logo-sub">Real Properties & Estate Agency</span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <button class="list-property" onclick="handleListProperty()">List Property</button>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ── HERO WITH SLIDESHOW ── -->
+    <section class="hero">
+        <div class="hero-slide active"  style="background-image:url('images/hero-bg.jpg')"></div>
+        <div class="hero-slide"         style="background-image:url('images/property1.jpg')"></div>
+        <div class="hero-slide"         style="background-image:url('images/property2.jpg')"></div>
+        <div class="hero-slide"         style="background-image:url('images/property3.jpg')"></div>
+        <div class="hero-slide"         style="background-image:url('images/property4.jpg')"></div>
+        <div class="hero-slide"         style="background-image:url('images/property5.jpg')"></div>
+        <div class="hero-slide"         style="background-image:url('images/property6.jpg')"></div>
+
+        <div class="hero-content">
+            <h1>Your Trusted Partner for Land, Farms &amp; Property in Malawi</h1>
+            <h2>Buy · Build · Invest — Salima's Most Trusted Real Estate Agency</h2>
+            <div class="animated-text">
+                <span class="active">Land for Sale</span>
+                <span>Farms</span>
+                <span>Residential</span>
+                <span>Commercial</span>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="window.location.href='properties.html'">View Properties</button>
+                <button class="btn-secondary" onclick="window.location.href='contact.html'">Contact Us</button>
+            </div>
+        </div>
+        <div class="slide-dots" id="slideDots"></div>
+    </section>
+
+    <!-- ── SEARCH BAR ── -->
+    <!-- the id="featuredAnchor" gives us a reliable scroll target -->
+    <div id="featuredAnchor"></div>
+    <div class="search-bar">
+        <div class="container">
+            <div class="search-form">
+                <select class="search-dropdown" id="filterType">
+                    <option value="">All Property Types</option>
+                    <option value="land">Land for Sale</option>
+                    <option value="farm">Farms</option>
+                    <option value="residential">Residential</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="rental">Rentals</option>
+                </select>
+                <select class="search-dropdown" id="filterLocation">
+                    <option value="">All Locations</option>
+                    <option value="salima">Salima</option>
+                    <option value="lilongwe">Lilongwe</option>
+                    <option value="blantyre">Blantyre</option>
+                    <option value="zomba">Zomba</option>
+                    <option value="kasungu">Kasungu</option>
+                </select>
+                <select class="search-dropdown" id="filterPrice">
+                    <option value="">All Prices</option>
+                    <option value="0-10">Under MWK 10M</option>
+                    <option value="10-20">MWK 10M – 20M</option>
+                    <option value="20-50">MWK 20M – 50M</option>
+                    <option value="50-9999">Over MWK 50M</option>
+                </select>
+                <button class="btn-search" id="searchBtn">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── CATEGORIES ── -->
+    <section class="property-categories">
+        <div class="container">
+            <h2>What Are You Looking For?</h2>
+            <div class="categories-grid">
+                <div class="category-card reveal reveal-delay-1"><div class="category-icon">🌍</div><h3>Land for Sale</h3><p>246 listings</p></div>
+                <div class="category-card reveal reveal-delay-2"><div class="category-icon">🌾</div><h3>Farms</h3><p>87 listings</p></div>
+                <div class="category-card reveal reveal-delay-3"><div class="category-icon">🏠</div><h3>Residential</h3><p>154 listings</p></div>
+                <div class="category-card reveal reveal-delay-4"><div class="category-icon">🏢</div><h3>Commercial</h3><p>65 listings</p></div>
+                <div class="category-card reveal"><div class="category-icon">🔑</div><h3>Rentals</h3><p>123 listings</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FEATURED PROPERTIES ── -->
+    <section class="featured-properties" id="featuredProperties">
+        <div class="container">
+            <h2>Featured Properties</h2>
+            <div class="properties-grid" id="propertiesGrid">
+
+                <div class="property-card reveal reveal-delay-1" data-type="land" data-location="lilongwe" data-price="8.5">
+                    <div class="property-image">
+                        <img src="images/property1.jpg" alt="Prime Plot Area 47" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B2A4A,#0A152A)';this.style.display='none'">
+                        <span class="property-badge sale">For Sale</span>
+                    </div>
+                    <h3>Prime Plot - Area 47</h3>
+                    <div class="property-location">📍 Lilongwe</div>
+                    <div class="property-price">MWK 8,500,000</div>
+                    <div class="property-details"><span>800sqm</span></div>
+                    <button class="btn-view" onclick="window.location.href='properties.html'">View Details</button>
+                </div>
+
+                <div class="property-card reveal reveal-delay-2" data-type="farm" data-location="salima" data-price="25">
+                    <div class="property-image">
+                        <img src="images/property2.jpg" alt="Farm Land Salima" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B2A4A,#0A152A)';this.style.display='none'">
+                        <span class="property-badge sale">For Sale</span>
+                    </div>
+                    <h3>Farm Land - Salima</h3>
+                    <div class="property-location">📍 Salima</div>
+                    <div class="property-price">MWK 25,000,000</div>
+                    <div class="property-details"><span>5 acres</span></div>
+                    <button class="btn-view" onclick="window.location.href='properties.html'">View Details</button>
+                </div>
+
+                <div class="property-card reveal reveal-delay-3" data-type="residential" data-location="salima" data-price="18">
+                    <div class="property-image">
+                        <img src="images/property3.jpg" alt="3 Bedroom House" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B2A4A,#0A152A)';this.style.display='none'">
+                        <span class="property-badge sale">For Sale</span>
+                    </div>
+                    <h3>3 Bedroom House</h3>
+                    <div class="property-location">📍 Salima</div>
+                    <div class="property-price">MWK 18,000,000</div>
+                    <div class="property-details"><span>3 beds · 2 baths</span></div>
+                    <button class="btn-view" onclick="window.location.href='properties.html'">View Details</button>
+                </div>
+
+                <div class="property-card reveal reveal-delay-1" data-type="commercial" data-location="blantyre" data-price="35">
+                    <div class="property-image">
+                        <img src="images/property4.jpg" alt="Commercial Plot" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B2A4A,#0A152A)';this.style.display='none'">
+                        <span class="property-badge sale">For Sale</span>
+                    </div>
+                    <h3>Commercial Plot</h3>
+                    <div class="property-location">📍 Blantyre</div>
+                    <div class="property-price">MWK 35,000,000</div>
+                    <div class="property-details"><span>1200sqm</span></div>
+                    <button class="btn-view" onclick="window.location.href='properties.html'">View Details</button>
+                </div>
+
+                <div class="property-card reveal reveal-delay-2" data-type="land" data-location="zomba" data-price="6.5">
+                    <div class="property-image">
+                        <img src="images/property5.jpg" alt="Residential Plot" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B2A4A,#0A152A)';this.style.display='none'">
+                        <span class="property-badge sale">For Sale</span>
+                    </div>
+                    <h3>Residential Plot</h3>
+                    <div class="property-location">📍 Zomba</div>
+                    <div class="property-price">MWK 6,500,000</div>
+                    <div class="property-details"><span>600sqm</span></div>
+                    <button class="btn-view" onclick="window.location.href='properties.html'">View Details</button>
+                </div>
+
+                <div class="property-card reveal reveal-delay-3" data-type="farm" data-location="kasungu" data-price="45">
+                    <div class="property-image">
+                        <img src="images/property6.jpg" alt="Agriculture Farm" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B2A4A,#0A152A)';this.style.display='none'">
+                        <span class="property-badge sale">For Sale</span>
+                    </div>
+                    <h3>Agriculture Farm</h3>
+                    <div class="property-location">📍 Kasungu</div>
+                    <div class="property-price">MWK 45,000,000</div>
+                    <div class="property-details"><span>12 acres</span></div>
+                    <button class="btn-view" onclick="window.location.href='properties.html'">View Details</button>
+                </div>
+
+                <div class="no-results" id="noResults">
+                    <span>🔍</span>
+                    No properties match your search. Try different filters.
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SERVICES ── -->
+    <section class="services-section" style="background-color:#1B2A4A;">
+        <div class="container">
+            <h2 style="color:#F0B429;text-align:center;font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:40px;">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card reveal reveal-delay-1"><div class="service-icon">🏡</div><h3>We Sell Properties</h3><p>Find your perfect property from our wide listings</p></div>
+                <div class="service-card reveal reveal-delay-2"><div class="service-icon">💰</div><h3>We Buy Properties</h3><p>We offer fair prices for your land and property</p></div>
+                <div class="service-card reveal reveal-delay-3"><div class="service-icon">📐</div><h3>Land Surveying</h3><p>Professional land surveying and boundary marking</p></div>
+                <div class="service-card reveal reveal-delay-4"><div class="service-icon">📄</div><h3>Title Deed Processing</h3><p>We handle all title deed and legal documentation</p></div>
+                <div class="service-card reveal"><div class="service-icon">📢</div><h3>Business Advertisement</h3><p>Advertise your business to thousands of clients</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── STATS ── -->
+    <section class="why-choose-us">
+        <div class="container">
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card reveal reveal-delay-1">
+                    <span class="stat-number" data-target="500" data-suffix="+">0</span>
+                    <p>Properties Listed</p>
+                </div>
+                <div class="stat-card reveal reveal-delay-2">
+                    <span class="stat-number" data-target="350" data-suffix="+">0</span>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-card reveal reveal-delay-3">
+                    <span class="stat-number" data-target="8" data-suffix="+">0</span>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-card reveal reveal-delay-4">
+                    <span class="stat-number" data-target="3" data-suffix="">0</span>
+                    <p>Districts Covered</p>
+                </div>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card reveal reveal-delay-1"><h3>Trusted Expertise</h3><p>Over 8 years of experience in Malawian real estate market</p></div>
+                <div class="benefit-card reveal reveal-delay-2"><h3>Local Knowledge</h3><p>Deep understanding of Salima and surrounding areas</p></div>
+                <div class="benefit-card reveal reveal-delay-3"><h3>Transparent Process</h3><p>No hidden fees, clear communication throughout</p></div>
+                <div class="benefit-card reveal reveal-delay-4"><h3>Personalized Service</h3><p>Tailored solutions to meet your specific needs</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── TESTIMONIALS ── -->
+    <section class="testimonials" style="background-color:#F8F9FA;">
+        <div class="container">
+            <h2>Client Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal reveal-delay-1">
+                    <div class="stars">★★★★★</div>
+                    <p>"Dolza helped me find my dream farm in Salima. Their team was knowledgeable and professional throughout the process."</p>
+                    <h4>James M.</h4><p class="location">Lilongwe</p>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-2">
+                    <div class="stars">★★★★★</div>
+                    <p>"I sold my property quickly with Dolza's assistance. They know the Malawian real estate market inside out."</p>
+                    <h4>Grace T.</h4><p class="location">Blantyre</p>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-3">
+                    <div class="stars">★★★★☆</div>
+                    <p>"Professional service from start to finish. The team guided me through title deed processing with ease."</p>
+                    <h4>Thomas K.</h4><p class="location">Zomba</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FREE VALUATION ── -->
+    <section class="valuation-section">
+        <div class="container">
+            <div class="valuation-inner">
+                <div class="valuation-text reveal">
+                    <h2>Get a Free Property Valuation</h2>
+                    <p>Wondering what your land or property is worth? Our expert team will give you an accurate, no-obligation valuation — completely free.</p>
+                    <p>We know the Malawian market inside out. Get a realistic price and sell faster.</p>
+                    <ul class="valuation-perks">
+                        <li>100% free — no hidden charges</li>
+                        <li>Response within 24 hours</li>
+                        <li>Expert knowledge of local market prices</li>
+                        <li>No obligation to sell with us</li>
+                    </ul>
+                </div>
+                <div class="valuation-form reveal reveal-delay-2">
+                    <h3>Request Your Free Valuation</h3>
+                    <p class="sub">Fill in the form and we'll be in touch shortly.</p>
+                    <form id="valuationForm">
+                        <div class="val-row">
+                            <div class="val-group">
+                                <label for="val-name">Your Name</label>
+                                <input type="text" id="val-name" placeholder="e.g. John Banda" required>
+                            </div>
+                            <div class="val-group">
+                                <label for="val-phone">Phone / WhatsApp</label>
+                                <input type="tel" id="val-phone" placeholder="+265 ..." required>
+                            </div>
+                        </div>
+                        <div class="val-group">
+                            <label for="val-type">Property Type</label>
+                            <select id="val-type" required>
+                                <option value="">Select type</option>
+                                <option>Land / Plot</option>
+                                <option>Farm</option>
+                                <option>Residential House</option>
+                                <option>Commercial Property</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="val-row">
+                            <div class="val-group">
+                                <label for="val-location">Location</label>
+                                <input type="text" id="val-location" placeholder="e.g. Salima Town" required>
+                            </div>
+                            <div class="val-group">
+                                <label for="val-size">Size (approx.)</label>
+                                <input type="text" id="val-size" placeholder="e.g. 800sqm / 2 acres">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-valuation">Get My Free Valuation →</button>
+                    </form>
+                    <div id="val-success" class="val-success">✅ Request received! We'll contact you within 24 hours.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="cta-section" style="background-color:#F0B429;padding:60px 0;">
+        <div class="container" style="text-align:center;">
+            <h2 style="font-family:'Playfair Display',serif;color:#1B2A4A;font-size:2rem;margin-bottom:24px;">Ready to Find Your Dream Property?</h2>
+            <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+                <button style="padding:14px 34px;background:#1B2A4A;color:white;border:none;border-radius:8px;font-family:'Lato',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;" onclick="window.location.href='properties.html'">Browse Properties</button>
+                <button style="padding:14px 34px;background:transparent;color:#1B2A4A;border:2px solid #1B2A4A;border-radius:8px;font-family:'Lato',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;" onclick="window.location.href='contact.html'">Call Us Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="logo">
+                        <img src="images/logo.png" alt="Dolza Real Properties & Estate Agency" class="logo-image">
+                        <div class="logo-text">
+                            <span class="logo-main">DOLZA</span>
+                            <span class="logo-sub">Real Properties & Estate Agency</span>
+                        </div>
+                    </div>
+                    <p>Your trusted partner for real estate solutions in Malawi. Buy · Build · Invest with confidence.</p>
+                    <div style="margin-top:15px;display:flex;gap:10px;">
+                        <a href="https://facebook.com/dolzarealproperties" target="_blank" style="background:#1877F2;color:white;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.85rem;">f Facebook</a>
+                        <a href="https://wa.me/265994369985" target="_blank" style="background:#25D366;color:white;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.85rem;">WhatsApp</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="properties.html">Properties</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="list-property.html">List Property</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">We Sell Properties</a></li>
+                        <li><a href="#">We Buy Properties</a></li>
+                        <li><a href="#">Land Surveying</a></li>
+                        <li><a href="#">Title Deed Processing</a></li>
+                        <li><a href="#">Business Advertisement</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>📍 Salima Office, Malawi</li>
+                        <li>📞 +265 994 369 985</li>
+                        <li>📞 +265 882 995 600</li>
+                        <li>✉️ dolzaestateagency@gmail.com</li>
+                        <li>📘 Dolza real properties & estate agency</li>
+                    </ul>
+                    <div class="hours">
+                        <h4>Working Hours</h4>
+                        <p>Mon-Fri: 8:00 AM - 5:00 PM<br>Sat: 9:00 AM - 1:00 PM<br>Sun: Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2026 Dolza Real Properties & Estate Agency. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top">↑</button>
+
+    <!-- ── WHATSAPP BUBBLE ── -->
+    <div class="wa-widget">
+        <div class="wa-greeting" id="waGreeting">
+            <button class="wa-close" onclick="document.getElementById('waGreeting').classList.remove('show')">✕</button>
+            <div class="wa-greeting-header">
+                <div class="wa-avatar">💬</div>
+                <div>
+                    <span class="wa-name">Dolza Real Estate</span>
+                    <span class="wa-status"><span class="wa-dot"></span> Online now</span>
+                </div>
+            </div>
+            <p>Hello! 👋 Looking to buy, sell or get a free valuation? Chat with us — we reply fast!</p>
+            <a class="wa-chat-link" href="https://wa.me/265994369985?text=Hello%20Dolza!%20I%27d%20like%20to%20enquire%20about%20a%20property." target="_blank">Start Chat →</a>
+        </div>
+        <button class="wa-btn" onclick="toggleWaGreeting()" aria-label="Chat on WhatsApp">
+            <span class="wa-badge" id="waBadge">1</span>
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill="white" d="M16 2.667C8.636 2.667 2.667 8.636 2.667 16c0 2.348.636 4.55 1.745 6.453L2.667 29.333l7.08-1.703A13.267 13.267 0 0016 29.333c7.364 0 13.333-5.97 13.333-13.333S23.364 2.667 16 2.667zm0 24A10.617 10.617 0 019.96 24.8l-.373-.24-3.867.933.973-3.76-.267-.4A10.597 10.597 0 015.333 16C5.333 10.12 10.12 5.333 16 5.333S26.667 10.12 26.667 16 21.88 26.667 16 26.667zm5.84-7.893c-.32-.16-1.893-.933-2.187-1.04-.293-.107-.507-.16-.72.16-.213.32-.827 1.04-.987 1.227-.16.186-.346.213-.666.053-.32-.16-1.347-.493-2.56-1.573-.947-.84-1.587-1.88-1.774-2.2-.186-.32-.02-.493.14-.653.147-.147.32-.373.48-.56.16-.187.213-.32.32-.533.107-.213.053-.4-.027-.56-.08-.16-.72-1.733-.987-2.373-.253-.613-.52-.533-.72-.547-.186-.013-.4-.013-.613-.013-.213 0-.56.08-.853.4-.293.32-1.12 1.093-1.12 2.667s1.147 3.093 1.307 3.307c.16.213 2.253 3.44 5.467 4.827.76.32 1.36.52 1.827.667.76.24 1.467.2 2.013.12.614-.093 1.893-.773 2.16-1.52.267-.747.267-1.387.187-1.52-.08-.133-.293-.213-.613-.373z"/>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+
+        /* ── Admin list property ── */
+        function handleListProperty() {
+            const ok = localStorage.getItem('adminAuthenticated') === 'true';
+            window.location.href = ok ? 'list-property.html' : 'admin.html';
+        }
+
+        /* ── Hero slideshow ── */
+        const slides = document.querySelectorAll('.hero-slide');
+        const dotsContainer = document.getElementById('slideDots');
+        let currentSlide = 0;
+
+        slides.forEach((_, i) => {
+            const d = document.createElement('button');
+            d.className = 'slide-dot' + (i === 0 ? ' active' : '');
+            d.setAttribute('aria-label', 'Slide ' + (i + 1));
+            d.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(d);
+        });
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            document.querySelectorAll('.slide-dot')[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            document.querySelectorAll('.slide-dot')[currentSlide].classList.add('active');
+        }
+
+        setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4000);
+
+        /* ── Hero text rotation ── */
+        const texts = document.querySelectorAll('.animated-text span');
+        let currentText = 0;
+        if (texts.length) {
+            setInterval(() => {
+                texts[currentText].classList.remove('active');
+                currentText = (currentText + 1) % texts.length;
+                texts[currentText].classList.add('active');
+            }, 2000);
+        }
+
+        /* ── PROPERTY FILTER ── */
+        function filterProperties() {
+            const typeVal     = document.getElementById('filterType').value.toLowerCase();
+            const locationVal = document.getElementById('filterLocation').value.toLowerCase();
+            const priceVal    = document.getElementById('filterPrice').value;
+
+            const cards = document.querySelectorAll('#propertiesGrid .property-card');
+            let visible = 0;
+
+            cards.forEach(card => {
+                const cardType     = (card.dataset.type     || '').toLowerCase();
+                const cardLocation = (card.dataset.location || '').toLowerCase();
+                const cardPrice    = parseFloat(card.dataset.price || 0);
+
+                const typeMatch     = !typeVal     || cardType === typeVal;
+                const locationMatch = !locationVal || cardLocation === locationVal;
+
+                let priceMatch = true;
+                if (priceVal) {
+                    const [min, max] = priceVal.split('-').map(Number);
+                    priceMatch = cardPrice >= min && cardPrice <= max;
+                }
+
+                if (typeMatch && locationMatch && priceMatch) {
+                    card.style.display = '';
+                    visible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+        }
+
+        /* ── Search button — filter THEN scroll ── */
+        document.getElementById('searchBtn').addEventListener('click', function () {
+            filterProperties();
+            document.getElementById('featuredProperties').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+
+        /* live filter on dropdown change (no scroll) */
+        ['filterType', 'filterLocation', 'filterPrice'].forEach(id => {
+            document.getElementById(id).addEventListener('change', filterProperties);
+        });
+
+        /* ── WhatsApp bubble ── */
+        function toggleWaGreeting() {
+            document.getElementById('waGreeting').classList.toggle('show');
+            document.getElementById('waBadge').style.display = 'none';
+        }
+        setTimeout(() => document.getElementById('waGreeting').classList.add('show'), 4000);
+
+        /* ── Scroll reveal ── */
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        /* ── Animated counters ── */
+        let countersDone = false;
+        const statsEl = document.getElementById('statsGrid');
+        const counterObs = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && !countersDone) {
+                countersDone = true;
+                document.querySelectorAll('.stat-number').forEach(el => {
+                    const target = +el.dataset.target;
+                    const suffix = el.dataset.suffix || '';
+                    let count = 0;
+                    const steps = 60, dur = 1800, inc = target / steps;
+                    const t = setInterval(() => {
+                        count += inc;
+                        if (count >= target) { count = target; clearInterval(t); }
+                        el.textContent = Math.floor(count) + suffix;
+                    }, dur / steps);
+                });
+            }
+        }, { threshold: 0.4 });
+        if (statsEl) counterObs.observe(statsEl);
+
+        /* ── Valuation form → WhatsApp ── */
+        document.getElementById('valuationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const msg = 'Hello Dolza Real Estate!\n\n🏡 FREE VALUATION REQUEST\n\n' +
+                'Name: '          + document.getElementById('val-name').value     + '\n' +
+                'Phone: '         + document.getElementById('val-phone').value    + '\n' +
+                'Property Type: ' + document.getElementById('val-type').value     + '\n' +
+                'Location: '      + document.getElementById('val-location').value + '\n' +
+                'Size: '          + (document.getElementById('val-size').value || 'Not specified');
+            window.open('https://wa.me/265994369985?text=' + encodeURIComponent(msg), '_blank');
+            document.getElementById('val-success').style.display = 'block';
+            this.reset();
+            setTimeout(() => document.getElementById('val-success').style.display = 'none', 6000);
+        });
+
+        /* ── Hamburger / sticky nav / back-to-top ── */
+        document.addEventListener('DOMContentLoaded', () => {
+            const ham = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav-links');
+            if (ham && nav) {
+                ham.addEventListener('click', () => nav.classList.toggle('active'));
+                document.querySelectorAll('.nav-links a').forEach(a =>
+                    a.addEventListener('click', () => nav.classList.remove('active'))
+                );
+            }
+            window.addEventListener('scroll', () => {
+                document.querySelector('.navbar')?.classList.toggle('scrolled', scrollY > 100);
+                document.querySelector('.back-to-top')?.classList.toggle('visible', scrollY > 300);
+            });
+            document.querySelector('.back-to-top')?.addEventListener('click', () =>
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+            );
+        });
+
+    </script>
+</body>
+</html>

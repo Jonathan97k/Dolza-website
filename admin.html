@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Dolza Real Properties & Estate Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-login {
+            background: linear-gradient(135deg, var(--primary-navy), #0A152A);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        
+        .login-container {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .login-header h1 {
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .login-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-navy);
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: var(--accent-gold);
+            color: var(--primary-navy);
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background: #e0a308;
+            transform: translateY(-2px);
+        }
+        
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #c62828;
+        }
+        
+        .admin-dashboard {
+            display: none;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+        
+        .admin-header {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-nav h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+        }
+        
+        .admin-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .admin-content {
+            padding: 40px 0;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .admin-tab {
+            background: none;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-tab.active {
+            color: var(--accent-gold);
+            border-bottom-color: var(--accent-gold);
+        }
+        
+        .admin-tab:hover {
+            color: var(--accent-gold);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .properties-table {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .properties-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .properties-table th {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .properties-table td {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .properties-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .edit-btn {
+            background: #007bff;
+            color: white;
+        }
+        
+        .edit-btn:hover {
+            background: #0056b3;
+        }
+        
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background: #c82333;
+        }
+        
+        .approve-btn {
+            background: #28a745;
+            color: white;
+        }
+        
+        .approve-btn:hover {
+            background: #218838;
+        }
+        
+        .reject-btn {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .reject-btn:hover {
+            background: #5a6268;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 30px;
+                margin: 20px;
+            }
+            
+            .admin-nav {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .admin-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .logout-btn {
+                width: 100%;
+            }
+            
+            .properties-table {
+                overflow-x: auto;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Login Section -->
+    <div id="loginSection" class="admin-login">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>Admin Login</h1>
+                <p>Property Management System</p>
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                Invalid credentials. Please try again.
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Email Address</label>
+                    <input type="email" id="adminEmail" name="adminEmail" required placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="login-btn">Login to Admin Panel</button>
+            </form>
+            
+            <div style="margin-top: 30px; text-align: center; font-size: 0.9rem; color: #666;">
+                <p>Default credentials: dolza@admin.com / password123</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Section -->
+    <div id="dashboardSection" class="admin-dashboard">
+        <div class="admin-header">
+            <div class="container">
+                <div class="admin-nav">
+                    <h2>Admin Dashboard</h2>
+                    <div class="admin-controls">
+                        <span id="adminEmailDisplay"></span>
+                        <button class="logout-btn" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="admin-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalListings">0</div>
+                        <div class="stat-label">Total Listings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pendingListings">0</div>
+                        <div class="stat-label">Pending Approval</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="approvedListings">0</div>
+                        <div class="stat-label">Approved Listings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="rejectedListings">0</div>
+                        <div class="stat-label">Rejected Listings</div>
+                    </div>
+                </div>
+
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="showTab('all')">All Properties</button>
+                    <button class="admin-tab" onclick="showTab('pending')">Pending</button>
+                    <button class="admin-tab" onclick="showTab('approved')">Approved</button>
+                    <button class="admin-tab" onclick="showTab('rejected')">Rejected</button>
+                </div>
+
+                <div id="allTab" class="tab-content active">
+                    <div id="allPropertiesTable"></div>
+                </div>
+
+                <div id="pendingTab" class="tab-content">
+                    <div id="pendingPropertiesTable"></div>
+                </div>
+
+                <div id="approvedTab" class="tab-content">
+                    <div id="approvedPropertiesTable"></div>
+                </div>
+
+                <div id="rejectedTab" class="tab-content">
+                    <div id="rejectedPropertiesTable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Property Modal -->
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 12px; max-width: 600px; width: 90%;">
+            &h3>Edit Property</h3>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="editName">Property Name*</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editType">Property Type*</label>
+                    <select id="editType" required>
+                        <option value="land">Land for Sale</option>
+                        <option value="farm">Farm</option>
+                        <option value="residential">Residential</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="rental">Rental</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editLocation">Location*</label>
+                    <input type="text" id="editLocation" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPrice">Price (MWK)*</label>
+                    <input type="number" id="editPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="editDetails">Details (bedrooms, size, etc.)*</label>
+                    <input type="text" id="editDetails" required>
+                </div>
+                <div class="form-group">
+                    <label for="editStatus">Status*</label>
+                    <select id="editStatus" required>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 30px;">
+                    <button type="button" onclick="closeEditModal()" style="padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; background: #6c757d; color: white;">Cancel</button>
+                    <button type="submit" style="padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; background: var(--accent-gold); color: var(--primary-navy); font-weight: 600;">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Admin credentials (you can change these)
+        const ADMIN_EMAIL = 'dolza@admin.com';
+        const ADMIN_PASSWORD = 'password123';
+
+        // Current editing property ID
+        let currentEditingId = null;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadProperties();
+        });
+
+        // Check if user is authenticated
+        function checkAuth() {
+            const isAuthenticated = localStorage.getItem('adminAuthenticated') === 'true';
+            const email = localStorage.getItem('adminEmail');
+            
+            if (isAuthenticated && email) {
+                showDashboard();
+            } else {
+                showLogin();
+            }
+        }
+
+        // Show login section
+        function showLogin() {
+            document.getElementById('loginSection').style.display = 'flex';
+            document.getElementById('dashboardSection').style.display = 'none';
+        }
+
+        // Show dashboard section
+        function showDashboard() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
+            document.getElementById('adminEmailDisplay').textContent = email;
+            loadProperties();
+            updateStats();
+        }
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                // Successful login
+                localStorage.setItem('adminAuthenticated', 'true');
+                localStorage.setItem('adminEmail', email);
+                localStorage.setItem('loginTime', Date.now().toString());
+                showDashboard();
+            } else {
+                // Failed login
+                document.getElementById('errorMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('adminAuthenticated');
+            localStorage.removeItem('adminEmail');
+            localStorage.removeItem('loginTime');
+            showLogin();
+        }
+
+        // Check session timeout
+        function checkSessionTimeout() {
+            const loginTime = localStorage.getItem('loginTime');
+            if (loginTime) {
+                const currentTime = Date.now();
+                const sessionTimeout = 30 * 60 * 1000; // 30 minutes
+                
+                if (currentTime - parseInt(loginTime) > sessionTimeout) {
+                    logout();
+                }
+            }
+        }
+
+        // Load properties from localStorage
+        function loadProperties() {
+            const properties = JSON.parse(localStorage.getItem('properties')) || [];
+            displayProperties(properties);
+            updateStats();
+        }
+
+        // Display properties in table
+        function displayProperties(properties) {
+            const allContainer = document.getElementById('allPropertiesTable');
+            const pendingContainer = document.getElementById('pendingPropertiesTable');
+            const approvedContainer = document.getElementById('approvedPropertiesTable');
+            const rejectedContainer = document.getElementById('rejectedPropertiesTable');
+            
+            // Clear containers
+            allContainer.innerHTML = '';
+            pendingContainer.innerHTML = '';
+            approvedContainer.innerHTML = '';
+            rejectedContainer.innerHTML = '';
+            
+            if (properties.length === 0) {
+                const emptyHtml = '<div class="empty-state"><h3>No properties found</h3><p>Start by adding some property listings.</p></div>';
+                allContainer.innerHTML = emptyHtml;
+                pendingContainer.innerHTML = emptyHtml;
+                approvedContainer.innerHTML = emptyHtml;
+                rejectedContainer.innerHTML = emptyHtml;
+                return;
+            }
+            
+            properties.forEach(property => {
+                const row = createPropertyRow(property);
+                
+                // Add to all table
+                allContainer.innerHTML += row;
+                
+                // Add to status-specific tables
+                if (property.status === 'pending') {
+                    pendingContainer.innerHTML += row;
+                } else if (property.status === 'approved') {
+                    approvedContainer.innerHTML += row;
+                } else if (property.status === 'rejected') {
+                    rejectedContainer.innerHTML += row;
+                }
+            });
+        }
+
+        // Create property table row
+        function createPropertyRow(property) {
+            const statusClass = `status-${property.status}`;
+            const statusText = property.status.charAt(0).toUpperCase() + property.status.slice(1);
+            
+            return `
+                <tr>
+                    <td>${property.name}</td>
+                    <td>${property.type}</td>
+                    <td>${property.location}</td>
+                    <td>${formatPrice(property.price)}</td>
+                    <td>${property.details}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>${new Date(property.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn edit-btn" onclick="editProperty('${property.id}')">Edit</button>
+                            <button class="action-btn approve-btn" onclick="approveProperty('${property.id}')">Approve</button>
+                            <button class="action-btn reject-btn" onclick="rejectProperty('${property.id}')">Reject</button>
+                            <button class="action-btn delete-btn" onclick="deleteProperty('${property.id}')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        // Update statistics
+        function updateStats() {
+            const properties = JSON.parse(localStorage.getItem('properties')) || [];
+            const total = properties.length;
+            const pending = properties.filter(p => p.status === 'pending').length;
+            const approved = properties.filter(p => p.status === 'approved').length;
+            const rejected = properties.filter(p => p.status === 'rejected').length;
+            
+            document.getElementById('totalListings').textContent = total;
+            document.getElementById('pendingListings').textContent = pending;
+            document.getElementById('approvedListings').textContent = approved;
+            document.getElementById('rejectedListings').textContent = rejected;
+        }
+
+        // Show specific tab
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.admin-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Edit property
+        function editProperty(id) {
+            const properties = JSON.parse(localStorage.getItem('properties')) || [];
+            const property = properties.find(p => p.id === id);
+            
+            if (property) {
+                currentEditingId = id;
+                document.getElementById('editName').value = property.name;
+                document.getElementById('editType').value = property.type;
+                document.getElementById('editLocation').value = property.location;
+                document.getElementById('editPrice').value = property.price;
+                document.getElementById('editDetails').value = property.details;
+                document.getElementById('editStatus').value = property.status;
+                
+                document.getElementById('editModal').style.display = 'block';
+            }
+        }
+
+        // Close edit modal
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+            currentEditingId = null;
+        }
+
+        // Handle edit form submission
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const properties = JSON.parse(localStorage.getItem('properties')) || [];
+            const propertyIndex = properties.findIndex(p => p.id === currentEditingId);
+            
+            if (propertyIndex !== -1) {
+                properties[propertyIndex] = {
+                    ...properties[propertyIndex],
+                    name: document.getElementById('editName').value,
+                    type: document.getElementById('editType').value,
+                    location: document.getElementById('editLocation').value,
+                    price: parseInt(document.getElementById('editPrice').value),
+                    details: document.getElementById('editDetails').value,
+                    status: document.getElementById('editStatus').value,
+                    updatedAt: new Date().toISOString()
+                };
+                
+                localStorage.setItem('properties', JSON.stringify(properties));
+                loadProperties();
+                closeEditModal();
+            }
+        });
+
+        // Approve property
+        function approveProperty(id) {
+            if (confirm('Are you sure you want to approve this property?')) {
+                updatePropertyStatus(id, 'approved');
+            }
+        }
+
+        // Reject property
+        function rejectProperty(id) {
+            if (confirm('Are you sure you want to reject this property?')) {
+                updatePropertyStatus(id, 'rejected');
+            }
+        }
+
+        // Update property status
+        function updatePropertyStatus(id, status) {
+            const properties = JSON.parse(localStorage.getItem('properties')) || [];
+            const propertyIndex = properties.findIndex(p => p.id === id);
+            
+            if (propertyIndex !== -1) {
+                properties[propertyIndex].status = status;
+                properties[propertyIndex].updatedAt = new Date().toISOString();
+                localStorage.setItem('properties', JSON.stringify(properties));
+                loadProperties();
+            }
+        }
+
+        // Delete property
+        function deleteProperty(id) {
+            if (confirm('Are you sure you want to delete this property? This action cannot be undone.')) {
+                const properties = JSON.parse(localStorage.getItem('properties')) || [];
+                const filteredProperties = properties.filter(p => p.id !== id);
+                localStorage.setItem('properties', JSON.stringify(filteredProperties));
+                loadProperties();
+            }
+        }
+
+        // Format price
+        function formatPrice(price) {
+            return 'MWK ' + price.toLocaleString();
+        }
+
+        // Check session timeout every minute
+        setInterval(checkSessionTimeout, 60000);
+    </script>
+</body>
+</html>

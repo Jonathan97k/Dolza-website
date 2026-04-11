@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Dolza Real Properties & Estate Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Page content spacing */
+        .contact-page-content {
+            padding: 80px 0 60px;
+        }
+
+        /* Two column contact layout */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+            padding: 80px 0 60px;
+        }
+
+        /* Form section */
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .contact-form h2 {
+            color: #1B2A4A;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #F0B429;
+        }
+
+        /* Form fields */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #1B2A4A;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            transition: border-color 0.3s ease;
+            outline: none;
+            box-sizing: border-box;
+            background: #fafafa;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #1B2A4A;
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        /* Submit button */
+        .contact-form .btn-primary {
+            background: #1B2A4A;
+            color: #F0B429;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Lato', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-form .btn-primary:hover {
+            background: #0a152a;
+            transform: translateY(-2px);
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 2px solid #c3e6cb;
+        }
+
+        /* Right column */
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Info cards */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            border-left: 4px solid #F0B429;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateX(5px);
+        }
+
+        .info-card h3 {
+            color: #1B2A4A;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Map placeholder */
+        .map-placeholder {
+            background: linear-gradient(
+              135deg, #1B2A4A, #0A152A);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-content h3 {
+            color: #F0B429;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .map-content p {
+            color: #ccc;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .map-content .btn-primary {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .map-content .btn-primary:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 60px 0 40px;
+            }
+            .contact-form {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-main">DOLZA</span>
+                <span class="logo-sub">Real Properties & Estate Agency</span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#" class="active">Contact</a></li>
+                </ul><!-- FIX 1: was &ul> -->
+                <button class="list-property" onclick="window.location.href='list-property.html'">List Property</button>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Contact Us</h1>
+            <h2>Get in Touch with Our Real Estate Experts</h2>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-form">
+                <h2>Send Us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject">
+                            <option value="">Select a subject</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="sale">Property for Sale</option>
+                            <option value="purchase">Property Purchase</option>
+                            <option value="surveying">Land Surveying</option>
+                            <option value="deed">Title Deed Processing</option>
+                            <option value="advertisement">Business Advertisement</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Submit Request</button>
+                </form>
+                <div id="successMessage" class="success-message">
+                    ✅ Thank you! We will contact you shortly. Your message has been sent to our team on WhatsApp.
+                </div>
+            </div>
+
+            <div class="contact-details">
+                <div class="contact-info">
+                    <div class="info-card">
+                        <h3>Our Office</h3>
+                        <p>📍 Salima Office, Malawi</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Contact Numbers</h3>
+                        <p>📞 +265 994 369 985<br>
+                        📞 +265 882 995 600</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Email</h3>
+                        <p>✉️ dolzaestateagency@gmail.com</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Working Hours</h3>
+                        <p>Mon-Fri: 8:00 AM - 5:00 PM<br>
+                        Sat: 9:00 AM - 1:00 PM<br>
+                        Sun: Closed</p>
+                    </div>
+                </div><!-- FIX 2: was &div> -->
+
+                <div class="map-placeholder">
+                    <div class="map-content">
+                        <h3>Find Us in Salima</h3>
+                        <p>We're located in the heart of Salima, ready to serve all your real estate needs.</p>
+                        <a href="https://wa.me/265994369985" target="_blank" style="background:#25D366;color:white;padding:14px 30px;border-radius:8px;font-size:1rem;font-weight:700;font-family:'Lato', sans-serif;transition:all 0.3s ease;display:inline-block;text-decoration:none;">WhatsApp Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="logo">
+                        <span class="logo-main">DOLZA</span>
+                        <span class="logo-sub">Real Properties & Estate Agency</span>
+                    </div>
+                    <p>Your trusted partner for real estate solutions in Malawi. Buy · Build · Invest with confidence.</p>
+                    <div class="social-icons" style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
+                        <a href="https://facebook.com/dolzarealproperties" target="_blank" style="background:#1877F2;color:white;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.85rem;">f Facebook</a>
+                        <a href="https://wa.me/265994369985" target="_blank" style="background:#25D366;color:white;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.85rem;">WhatsApp</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="properties.html">Properties</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#" class="active">Contact</a></li>
+                        <li><a href="list-property.html">List Property</a></li>
+                    </ul><!-- FIX 3: was &ul> -->
+                </div>
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">We Sell Properties</a></li>
+                        <li><a href="#">We Buy Properties</a></li>
+                        <li><a href="#">Land Surveying</a></li>
+                        <li><a href="#">Title Deed Processing</a></li>
+                        <li><a href="#">Business Advertisement</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>📍 Salima Office, Malawi</li>
+                        <li>📞 +265 994 369 985</li>
+                        <li>📞 +265 882 995 600</li>
+                        <li>✉️ dolzaestateagency@gmail.com</li>
+                        <li>📘 Dolza real properties & estate agency</li>
+                    </ul>
+                    <div class="hours">
+                        <h4>Working Hours</h4>
+                        <p>Mon-Fri: 8:00 AM - 5:00 PM<br>
+                        Sat: 9:00 AM - 1:00 PM<br>
+                        Sun: Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2026 Dolza Real Properties & Estate Agency. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top">↑</button>
+    <button class="whatsapp-float" onclick="window.open('https://wa.me/265994369985', '_blank')">
+        💬
+    </button>
+
+    <script>
+        document.getElementById('contactForm')
+          .addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Build WhatsApp message
+            const waMessage = 
+              'Hello Dolza Real Estate!\n\n' +
+              'Name: ' + name + '\n' +
+              'Phone: ' + phone + '\n' +
+              'Subject: ' + subject + '\n\n' +
+              'Message: ' + message;
+            
+            // Open WhatsApp with pre-filled message
+            window.open(
+              'https://wa.me/265994369985?text=' + 
+              encodeURIComponent(waMessage), '_blank');
+            
+            // Show success message
+            const success = document.getElementById('successMessage');
+            success.style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            
+            // Hide success after 5 seconds
+            setTimeout(() => {
+              success.style.display = 'none';
+            }, 5000);
+          });
+
+        // Hamburger Menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if(hamburger && navLinks) {
+              hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+              });
+            }
+            
+            // Sticky navbar
+            window.addEventListener('scroll', () => {
+              const navbar = document.querySelector('.navbar');
+              if(navbar) {
+                if(window.scrollY > 100) {
+                  navbar.classList.add('scrolled');
+                } else {
+                  navbar.classList.remove('scrolled');
+                }
+              }
+            });
+            
+            // Back to top
+            const backToTop = document.querySelector('.back-to-top');
+            if(backToTop) {
+              window.addEventListener('scroll', () => {
+                if(window.scrollY > 300) {
+                  backToTop.classList.add('visible');
+                } else {
+                  backToTop.classList.remove('visible');
+                }
+              });
+              backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              });
+            }
+          });
+    </script>
+</body>
+</html>
