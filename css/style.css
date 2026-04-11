@@ -346,6 +346,7 @@ p {
     border-radius: 4px;
     font-family: 'Lato', sans-serif;
     font-size: 1rem;
+    color: #000;
 }
 
 .btn-search {
@@ -439,6 +440,13 @@ p {
     align-items: flex-start;
     justify-content: center;
     padding: 15px;
+}
+
+.property-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .property-badge {
@@ -990,4 +998,54 @@ footer {
     .btn-primary, .btn-secondary {
         width: 100%;
     }
+}
+
+/* Phones: 480px breakpoint */
+@media (max-width: 480px) {
+    :root { }
+    body { font-size: 15px; }
+
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.4rem; }
+
+    .container { padding: 0 12px; }
+
+    /* Navigation adjustments for small phones */
+    .nav-links {
+        width: 100%;
+        right: -100%;
+        top: 70px;
+        height: calc(100vh - 70px);
+    }
+
+    .nav-links.active { right: 0; }
+
+    /* Stack search form controls and make full width */
+    .search-form { flex-direction: column; gap: 10px; padding: 12px; }
+    .search-dropdown, .btn-search { width: 100%; min-width: 0; }
+
+    /* Make property cards single column */
+    .properties-grid { grid-template-columns: 1fr !important; }
+
+    /* Categories to single column */
+    .categories-grid { grid-template-columns: 1fr !important; }
+
+    /* Scale down property image height */
+    .property-image { height: 150px; padding: 10px; }
+
+    /* Ensure property card content is readable */
+    .property-card h3 { font-size: 1.2rem; }
+    .property-price { font-size: 1.1rem; }
+
+    /* Forms full width */
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-group input, .form-group select, .form-group textarea { font-size: 1rem; }
+
+    /* Reduce hero vertical space */
+    .hero { padding-top: 60px; }
+    .hero h1 { font-size: 1.6rem; }
+    .hero h2 { font-size: 1rem; }
+
+    /* Reduce CTA button sizes */
+    .btn-primary, .btn-secondary, .btn-view { font-size: 0.95rem; padding: 10px 14px; }
 }
