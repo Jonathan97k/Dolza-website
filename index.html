@@ -8,15 +8,6 @@
     <link rel="stylesheet" href="css/style.css">
     <style>
 
-        /* ══ HERO SLIDESHOW ══ */
-    
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid white;
-        }
-
         /* ══ SCROLL REVEAL ══ */
         .reveal {
             opacity: 0;
@@ -45,17 +36,229 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
-        @media (max-width: 900px) { .properties-grid { grid-template-columns: repeat(2,1fr); } }
-        @media (max-width: 580px) { .properties-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 600px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero-content h1 { font-size: 1.8rem; }
-            .logo-image { height: 60px; }
-            .logo-main { font-size: 1.4rem; }
-        }
 
         section { margin: 0; padding-top: 60px; padding-bottom: 60px; }
         .search-bar { padding-top: 0; padding-bottom: 0; }
+
+        /* ══════════════════════════════════════════
+           MOBILE RESPONSIVE FIXES
+        ══════════════════════════════════════════ */
+
+        /* ── NAVBAR ── */
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* ── SEARCH FORM ── */
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .search-dropdown {
+            flex: 1 1 140px;
+            min-width: 120px;
+        }
+        .btn-search {
+            flex: 1 1 100%;
+        }
+
+        /* ── VALUATION FORM ── */
+        .val-row {
+            display: flex;
+            gap: 16px;
+        }
+        .val-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ══ TABLET: max-width 900px ══ */
+        @media (max-width: 900px) {
+            .properties-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 30px;
+            }
+
+            .valuation-inner {
+                flex-direction: column !important;
+            }
+        }
+
+        /* ══ MOBILE: max-width 768px ══ */
+        @media (max-width: 768px) {
+
+            /* NAVBAR */
+            .hamburger { display: flex; }
+
+            nav {
+                position: relative;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background: #1B2A4A;
+                min-width: 200px;
+                border-radius: 8px;
+                padding: 16px 0;
+                z-index: 1000;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            }
+            .nav-links.active { display: flex; }
+            .nav-links li { list-style: none; }
+            .nav-links a {
+                display: block;
+                padding: 12px 24px;
+                color: white;
+                text-decoration: none;
+                font-size: 1rem;
+            }
+            .nav-links a:hover { background: rgba(255,255,255,0.1); }
+
+            .list-property {
+                display: none;
+            }
+
+            /* HERO */
+            .hero-content h1 { font-size: 1.6rem; line-height: 1.3; }
+            .hero-content h2 { font-size: 1rem; }
+            .hero-buttons { flex-direction: column; gap: 10px; align-items: center; }
+            .hero-buttons button { width: 100%; max-width: 280px; }
+
+            /* LOGO */
+            .logo-image { height: 50px; }
+            .logo-main { font-size: 1.2rem; }
+            .logo-sub { font-size: 0.65rem; }
+
+            /* SEARCH BAR */
+            .search-form {
+                flex-direction: column;
+            }
+            .search-dropdown {
+                width: 100%;
+                flex: 1 1 100%;
+            }
+            .btn-search {
+                width: 100%;
+                padding: 14px;
+            }
+
+            /* CATEGORIES */
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 14px;
+            }
+
+            /* PROPERTIES GRID */
+            .properties-grid { grid-template-columns: 1fr; }
+
+            /* SERVICES */
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 16px;
+            }
+
+            /* STATS */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 16px;
+            }
+
+            /* BENEFITS */
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 16px;
+            }
+
+            /* TESTIMONIALS */
+            .testimonials-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+            }
+
+            /* VALUATION FORM */
+            .val-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .valuation-inner {
+                flex-direction: column !important;
+            }
+
+            /* FOOTER */
+            .footer-grid {
+                grid-template-columns: 1fr !important;
+                gap: 30px;
+            }
+
+            /* CTA SECTION */
+            .cta-section h2 { font-size: 1.5rem !important; }
+            .cta-section div[style*="display:flex"] {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-section button {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            /* SECTION HEADINGS */
+            .featured-properties h2,
+            .property-categories h2 {
+                font-size: 1.7rem;
+            }
+
+            /* GENERAL PADDING */
+            .container { padding: 0 16px; }
+            section { padding-top: 40px; padding-bottom: 40px; }
+        }
+
+        /* ══ SMALL PHONES: max-width 480px ══ */
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 1.35rem; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .services-grid { grid-template-columns: 1fr !important; }
+            .benefits-grid { grid-template-columns: 1fr !important; }
+            .logo-sub { display: none; }
+
+            .stat-card { padding: 20px 10px; }
+            .stat-number { font-size: 2rem; }
+
+            /* WhatsApp widget */
+            .wa-greeting {
+                right: 10px !important;
+                left: 10px !important;
+                width: auto !important;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -111,7 +314,6 @@
     </section>
 
     <!-- ── SEARCH BAR ── -->
-    <!-- the id="featuredAnchor" gives us a reliable scroll target -->
     <div id="featuredAnchor"></div>
     <div class="search-bar">
         <div class="container">
@@ -395,7 +597,7 @@
                         </div>
                     </div>
                     <p>Your trusted partner for real estate solutions in Malawi. Buy · Build · Invest with confidence.</p>
-                    <div style="margin-top:15px;display:flex;gap:10px;">
+                    <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
                         <a href="https://facebook.com/dolzarealproperties" target="_blank" style="background:#1877F2;color:white;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.85rem;">f Facebook</a>
                         <a href="https://wa.me/265994369985" target="_blank" style="background:#25D366;color:white;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.85rem;">WhatsApp</a>
                     </div>
@@ -541,7 +743,6 @@
             document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
         }
 
-        /* ── Search button — filter THEN scroll ── */
         document.getElementById('searchBtn').addEventListener('click', function () {
             filterProperties();
             document.getElementById('featuredProperties').scrollIntoView({
@@ -550,7 +751,6 @@
             });
         });
 
-        /* live filter on dropdown change (no scroll) */
         ['filterType', 'filterLocation', 'filterPrice'].forEach(id => {
             document.getElementById(id).addEventListener('change', filterProperties);
         });
@@ -609,9 +809,16 @@
             const ham = document.querySelector('.hamburger');
             const nav = document.querySelector('.nav-links');
             if (ham && nav) {
-                ham.addEventListener('click', () => nav.classList.toggle('active'));
+                ham.addEventListener('click', () => {
+                    nav.classList.toggle('active');
+                    /* animate hamburger to X */
+                    ham.classList.toggle('open');
+                });
                 document.querySelectorAll('.nav-links a').forEach(a =>
-                    a.addEventListener('click', () => nav.classList.remove('active'))
+                    a.addEventListener('click', () => {
+                        nav.classList.remove('active');
+                        ham.classList.remove('open');
+                    })
                 );
             }
             window.addEventListener('scroll', () => {
