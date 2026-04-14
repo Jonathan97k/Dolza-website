@@ -4,9 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Properties - Dolza Real Properties & Estate Agency</title>
+    <meta name="description" content="Browse premium land, farms, residential and commercial properties for sale and rent in Malawi. Dolza Real Properties & Estate Agency.">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
+        /* ==========================================
+           PROPERTIES PAGE — PREMIUM REDESIGN
+           ========================================== */
+
+        body {
+            background: #060d1a;
+            color: #e0e4ec;
+        }
+
+        /* ---------- Container Override (Fix list format) ---------- */
+        .properties-section .container {
+            display: block !important;
+        }
+
+        /* ---------- Navbar overrides ---------- */
         .navbar {
             position: fixed;
             top: 0;
@@ -16,156 +32,665 @@
             height: 75px;
             display: flex;
             align-items: center;
+            background: rgba(6, 13, 26, 0.6);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(240, 180, 41, 0.08);
+            transition: background 0.4s ease, box-shadow 0.4s ease;
         }
-        
+
+        .navbar.scrolled {
+            background: rgba(6, 13, 26, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ---------- Hero Section ---------- */
         .hero {
+            position: relative;
+            min-height: 65vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding-top: 75px;
-        }
-        
-        .properties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .property-card {
-            background: var(--white);
-            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            position: relative;
+            background: linear-gradient(rgba(6, 13, 26, 0.7), rgba(15, 28, 54, 0.85)), url('images/property6.jpg') center/cover no-repeat fixed;
         }
-        
-        .property-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .property-image {
-            height: 250px;
-            overflow: hidden;
-            position: relative;
-            background: linear-gradient(135deg, #1B2A4A, #0A152A);
-        }
-        
-        .property-image img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .property-card:hover .property-image img {
-            transform: scale(1.05);
-        }
-        
-        .property-badge {
+
+        .hero::before {
+            content: '';
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--accent-gold);
-            color: var(--primary-navy);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(240, 180, 41, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+            animation: heroGlow 12s ease-in-out infinite alternate;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-3%, 3%) scale(1.08); }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to top, #060d1a, transparent);
             z-index: 2;
         }
-        
-        .property-content {
-            padding: 25px;
+
+        /* Floating particles */
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
         }
-        
-        .property-card h3 {
-            color: var(--primary-navy);
-            margin-bottom: 10px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(240, 180, 41, 0.35);
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
         }
-        
-        .property-location {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
         }
-        
-        .property-price {
-            color: var(--accent-gold);
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .property-details {
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-        
-        .btn-view {
-            background: var(--primary-navy);
-            color: var(--white);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'Lato', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        
-        .btn-view:hover {
-            background: #0a152a;
-        }
-        
-        .empty-state {
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
             text-align: center;
-            padding: 60px 20px;
-            color: #666;
+            color: white;
+            padding: 40px 20px;
+            max-width: 800px;
         }
-        
-        .empty-state h3 {
-            color: var(--primary-navy);
-            margin-bottom: 10px;
+
+        .hero-content .hero-tag {
+            display: inline-block;
+            background: rgba(240, 180, 41, 0.12);
+            border: 1px solid rgba(240, 180, 41, 0.3);
+            color: #F0B429;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            backdrop-filter: blur(6px);
         }
-        
-        .filter-bar {
+
+        .hero-content h1 {
+            font-size: 3.4rem;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #fff 30%, #F0B429);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 18px;
+            line-height: 1.15;
+        }
+
+        .hero-content .hero-subtitle {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+            max-width: 550px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+
+        /* Stats row on hero */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #F0B429;
+            display: block;
+        }
+
+        .hero-stat .stat-label {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+        }
+
+        /* ---------- Filter Bar ---------- */
+        .filter-section {
             position: sticky;
             top: 75px;
             z-index: 500;
-            background: white;
-            padding: 12px 20px;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #F0B429;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            background: rgba(6, 13, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(240, 180, 41, 0.1);
+            padding: 16px 0;
+        }
+
+        .filter-bar {
+            position: static;
+            background: none;
+            border-bottom: none;
+            box-shadow: none;
+            padding: 0 20px;
+            margin-bottom: 0;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
+
         .filter-btn {
-            padding: 10px 20px;
-            border: 2px solid #1B2A4A;
-            background: white;
-            color: #1B2A4A;
-            border-radius: 25px;
+            padding: 10px 24px;
+            border: 1px solid rgba(240, 180, 41, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 0.88rem;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+        }
+
+        .filter-btn:hover {
+            background: rgba(240, 180, 41, 0.1);
+            color: #F0B429;
+            border-color: rgba(240, 180, 41, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #F0B429, #e0a308);
+            color: #060d1a;
+            border-color: #F0B429;
+            box-shadow: 0 4px 20px rgba(240, 180, 41, 0.3);
+        }
+
+        /* Result count */
+        .results-info {
+            text-align: center;
+            padding: 20px 0 0;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        .results-info span {
+            color: #F0B429;
+            font-weight: 700;
+        }
+
+        /* ---------- Properties Grid ---------- */
+        .properties-section {
+            padding: 30px 0 80px;
+            position: relative;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+            margin-top: 24px;
+        }
+
+        /* ---------- Property Card — Glass Premium ---------- */
+        .property-card {
+            background: linear-gradient(145deg, rgba(27, 42, 74, 0.5), rgba(15, 28, 54, 0.8));
+            border: 1px solid rgba(240, 180, 41, 0.08);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .property-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .property-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(240, 180, 41, 0.15), transparent 50%, rgba(59, 130, 246, 0.1));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.45s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(240, 180, 41, 0.12), 0 8px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(240, 180, 41, 0.2);
+        }
+
+        .property-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Image area */
+        .property-image {
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #1B2A4A, #0A152A);
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
+            filter: brightness(0.85);
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.1);
+            filter: brightness(1);
+        }
+
+        /* Image overlay gradient */
+        .property-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, rgba(6, 13, 26, 0.8), transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Badge */
+        .property-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 7px 16px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+
+        .property-badge.sale {
+            background: rgba(240, 180, 41, 0.9);
+            color: #060d1a;
+        }
+
+        .property-badge.rent {
+            background: rgba(16, 185, 129, 0.9);
+            color: #fff;
+        }
+
+        /* Favorite icon */
+        .property-fav {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
-        
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: #1B2A4A;
+
+        .property-fav:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            transform: scale(1.15);
+        }
+
+        .property-fav.liked {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        /* Card content */
+        .property-content {
+            padding: 22px 24px 24px;
+        }
+
+        .property-type-tag {
+            display: inline-block;
+            background: rgba(240, 180, 41, 0.1);
+            color: #F0B429;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .property-card h3 {
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            line-height: 1.3;
+        }
+
+        .property-location {
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .property-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #F0B429, #ffd966);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .property-meta {
+            display: flex;
+            gap: 16px;
+            padding: 14px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .property-meta .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        .meta-item .meta-icon {
+            font-size: 1rem;
+        }
+
+        .property-details {
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+        }
+
+        /* View Details Button */
+        .btn-view {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 24px;
+            background: linear-gradient(135deg, rgba(240, 180, 41, 0.15), rgba(240, 180, 41, 0.05));
+            border: 1px solid rgba(240, 180, 41, 0.25);
+            color: #F0B429;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-view:hover {
+            background: linear-gradient(135deg, #F0B429, #e0a308);
+            color: #060d1a;
+            border-color: #F0B429;
+            box-shadow: 0 6px 25px rgba(240, 180, 41, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-view .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-view:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* ---------- Empty State ---------- */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        /* ---------- Property Modal — Premium Redesign ---------- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 13, 26, 0.88);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: linear-gradient(160deg, #111d35, #0a1528);
+            border: 1px solid rgba(240, 180, 41, 0.12);
+            border-radius: 22px;
+            max-width: 520px;
+            width: 100%;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(240, 180, 41, 0.06);
+            animation: modalSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(6px);
+        }
+
+        .modal-close:hover {
+            background: rgba(239, 68, 68, 0.25);
+            border-color: rgba(239, 68, 68, 0.4);
+            transform: rotate(90deg);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 22px 22px 0 0;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-body h2 {
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .modal-body .modal-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #F0B429, #ffd966);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .modal-body .modal-location {
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .modal-body .modal-size {
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .modal-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 20px 0;
+        }
+
+        .modal-body .modal-desc {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .modal-body .modal-desc strong {
             color: #F0B429;
         }
-        
-        /* Background slideshow animation */
+
+        .btn-whatsapp-enquiry {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #25D366, #1fad55);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-top: 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+            cursor: pointer;
+        }
+
+        .btn-whatsapp-enquiry:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.45);
+        }
+
+        .btn-call-enquiry {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: white;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-call-enquiry:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ---------- Background Slideshow ---------- */
         .background-slideshow {
             position: fixed;
             top: 0;
@@ -175,7 +700,7 @@
             z-index: -1;
             overflow: hidden;
         }
-        
+
         .slide {
             position: absolute;
             top: 0;
@@ -185,32 +710,244 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            transition: opacity 2s ease-in-out;
+            transition: opacity 2.5s ease-in-out;
         }
-        
+
         .slide.active {
-            opacity: 0.3;
+            opacity: 0.12;
         }
-        
-        /* Add overlay for better text readability */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(10, 21, 42, 0.8), rgba(27, 42, 74, 0.8));
-            z-index: 1;
+
+        /* ---------- Footer overrides for dark theme ---------- */
+        footer {
+            background: #080f1e;
+            border-top: 1px solid rgba(240, 180, 41, 0.08);
         }
-        
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: white;
-            padding: 20px;
-            max-width: 800px;
+
+        /* ---------- WhatsApp & Back to Top ---------- */
+        .whatsapp-float {
+            background: linear-gradient(135deg, #25D366, #1fad55);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+        }
+
+        .back-to-top {
+            background: linear-gradient(135deg, #F0B429, #e0a308);
+        }
+
+        /* ---------- Scrollbar ---------- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #060d1a; }
+        ::-webkit-scrollbar-thumb { background: rgba(240, 180, 41, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(240, 180, 41, 0.5); }
+
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+
+        @media (max-width: 1024px) {
+            .properties-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 24px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 55vh;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                gap: 24px;
+            }
+
+            .hero-stat .stat-number {
+                font-size: 1.7rem;
+            }
+
+            .filter-bar {
+                gap: 8px;
+                padding: 0 14px;
+            }
+
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.82rem;
+            }
+
+            .properties-grid {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 20px;
+            }
+
+            .property-image,
+            .property-image img {
+                height: 200px;
+            }
+
+            .property-card h3 {
+                font-size: 1.15rem;
+            }
+
+            .property-price {
+                font-size: 1.3rem;
+            }
+
+            .modal-box {
+                max-width: 95%;
+                border-radius: 18px;
+            }
+
+            .modal-image {
+                height: 180px;
+                border-radius: 18px 18px 0 0;
+            }
+
+            .modal-body {
+                padding: 24px 20px;
+            }
+
+            .modal-body h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 50vh;
+                padding-top: 70px;
+            }
+
+            .hero-content {
+                padding: 20px 16px;
+            }
+
+            .hero-content .hero-tag {
+                font-size: 0.72rem;
+                padding: 6px 16px;
+            }
+
+            .hero-content h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-content .hero-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .hero-stats {
+                gap: 16px;
+            }
+
+            .hero-stat .stat-number {
+                font-size: 1.4rem;
+            }
+
+            .hero-stat .stat-label {
+                font-size: 0.7rem;
+            }
+
+            .filter-section {
+                top: 65px;
+            }
+
+            .filter-bar {
+                gap: 6px;
+                padding: 0 10px;
+                justify-content: flex-start;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .filter-bar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .filter-btn {
+                flex-shrink: 0;
+                padding: 8px 14px;
+                font-size: 0.78rem;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                padding: 0 4px;
+            }
+
+            .property-image,
+            .property-image img {
+                height: 200px;
+            }
+
+            .property-content {
+                padding: 18px 18px 20px;
+            }
+
+            .property-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .property-price {
+                font-size: 1.25rem;
+            }
+
+            .property-meta {
+                gap: 12px;
+            }
+
+            .btn-view {
+                padding: 12px 18px;
+                font-size: 0.88rem;
+            }
+
+            .modal-box {
+                max-width: 100%;
+                max-height: 90vh;
+                border-radius: 16px 16px 0 0;
+                align-self: flex-end;
+            }
+
+            .modal-image {
+                height: 160px;
+                border-radius: 16px 16px 0 0;
+            }
+
+            .modal-body h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-body .modal-price {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .property-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
     </style>
 </head>
@@ -222,16 +959,13 @@
         <div class="slide" style="background-image: url('images/property4.jpg');"></div>
         <div class="slide" style="background-image: url('images/property5.jpg');"></div>
         <div class="slide" style="background-image: url('images/property6.jpg');"></div>
-        <div class="slide" style="background-image: url('images/property7.jpg');"></div>
-        <div class="slide" style="background-image: url('images/property8.jpg');"></div>
-        <div class="slide" style="background-image: url('images/property9.jpg');"></div>
     </div>
 
     <header class="navbar">
         <div class="container">
             <div class="logo">
                 <span class="logo-main">DOLZA</span>
-                <span class="logo-sub">Real Properties & Estate Agency</span>
+                <span class="logo-sub">Real Properties &amp; Estate Agency</span>
             </div>
             <nav>
                 <ul class="nav-links">
@@ -241,7 +975,7 @@
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
                 <button class="list-property" onclick="window.location.href='list-property.html'">List Property</button>
-                <div class="hamburger">
+                <div class="hamburger" id="hamburgerBtn">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -251,25 +985,44 @@
     </header>
 
     <section class="hero">
+        <div class="hero-particles" id="heroParticles"></div>
         <div class="hero-content">
-            <h1>Our Properties</h1>
-            <h2>Find Your Perfect Land, Farm or Property in Malawi</h2>
+            <span class="hero-tag">Premium Listings</span>
+            <h1>Discover Your Perfect Property</h1>
+            <p class="hero-subtitle">Explore land, farms, residential and commercial properties across Malawi with Dolza Real Properties & Estate Agency</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="stat-number" data-target="150">0</span>
+                    <span class="stat-label">Properties</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="stat-number" data-target="12">0</span>
+                    <span class="stat-label">Districts</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="stat-number" data-target="98">0</span>
+                    <span class="stat-label">% Satisfied</span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="land">Land for Sale</button>
-        <button class="filter-btn" data-filter="farms">Farms</button>
-        <button class="filter-btn" data-filter="residential">Residential</button>
-        <button class="filter-btn" data-filter="commercial">Commercial</button>
-        <button class="filter-btn" data-filter="rentals">Rentals</button>
+    <div class="filter-section">
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" data-filter="all">All Properties</button>
+            <button class="filter-btn" data-filter="land">🏞️ Land</button>
+            <button class="filter-btn" data-filter="farms">🌾 Farms</button>
+            <button class="filter-btn" data-filter="residential">🏠 Residential</button>
+            <button class="filter-btn" data-filter="commercial">🏢 Commercial</button>
+            <button class="filter-btn" data-filter="rentals">🔑 Rentals</button>
+        </div>
     </div>
 
-    <section style="padding: 20px 0 60px;">
+    <section class="properties-section">
         <div class="container">
+            <div class="results-info" id="resultsInfo"></div>
             <div id="propertiesGrid" class="properties-grid">
-                <!-- Properties will be loaded here dynamically -->
+                <!-- Properties loaded dynamically -->
             </div>
         </div>
     </section>
@@ -280,7 +1033,7 @@
                 <div class="footer-column">
                     <div class="logo">
                         <span class="logo-main">DOLZA</span>
-                        <span class="logo-sub">Real Properties & Estate Agency</span>
+                        <span class="logo-sub">Real Properties &amp; Estate Agency</span>
                     </div>
                     <p>Your trusted partner for real estate solutions in Malawi. Buy · Build · Invest with confidence.</p>
                     <div class="social-icons" style="margin-top:15px;display:flex;gap:10px;">
@@ -315,7 +1068,7 @@
                         <li>📞 +265 994 369 985</li>
                         <li>📞 +265 882 995 600</li>
                         <li>✉️ dolzaestateagency@gmail.com</li>
-                        <li>📘 Dolza real properties & estate agency</li>
+                        <li>📘 Dolza real properties &amp; estate agency</li>
                     </ul>
                     <div class="hours">
                         <h4>Working Hours</h4>
@@ -331,283 +1084,356 @@
         </div>
     </footer>
 
-    <button class="back-to-top">↑</button>
+    <button class="back-to-top" id="backToTop">↑</button>
     <button class="whatsapp-float" onclick="window.open('https://wa.me/265994369985', '_blank')">
         💬
     </button>
 
-    <div id="propertyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
-        <div style="background:white;border-radius:15px;padding:40px;max-width:500px;width:90%;position:relative;max-height:80vh;overflow-y:auto;">
-            <button onclick="closeModal()" style="position:absolute;top:15px;right:15px;background:#1B2A4A;color:white;border:none;border-radius:50%;width:35px;height:35px;font-size:1.2rem;cursor:pointer;">×</button>
-            <div id="modalContent"></div>
-            <a id="whatsappEnquiry" href="#" target="_blank" style="display:block;background:#25D366;color:white;text-align:center;padding:14px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:20px;">Enquire on WhatsApp</a>
+    <!-- Premium Property Modal -->
+    <div class="modal-overlay" id="propertyModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <img class="modal-image" id="modalImage" src="" alt="Property">
+            <div class="modal-body">
+                <div id="modalContent"></div>
+                <a id="whatsappEnquiry" class="btn-whatsapp-enquiry" href="#" target="_blank">
+                    💬 Enquire on WhatsApp
+                </a>
+                <a class="btn-call-enquiry" href="tel:+265994369985">
+                    📞 Call Us Directly
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Load properties from localStorage
+            // Generate hero particles
+            const particlesContainer = document.getElementById('heroParticles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = (Math.random() * 100 + 100) + '%';
+                particle.style.width = (Math.random() * 4 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                particle.style.animationDelay = (Math.random() * 6) + 's';
+                particlesContainer.appendChild(particle);
+            }
+
+            // Animate stat numbers
+            const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+            const animateStats = () => {
+                statNumbers.forEach(stat => {
+                    const target = parseInt(stat.getAttribute('data-target'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+                    const counter = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            stat.textContent = target + '+';
+                            clearInterval(counter);
+                        } else {
+                            stat.textContent = Math.floor(current);
+                        }
+                    }, 16);
+                });
+            };
+
+            // Trigger stats animation when hero is in view
+            const heroObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        heroObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.3 });
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) heroObserver.observe(heroSection);
+
+            // Load properties
             loadProperties();
-            
+
             // Hamburger Menu Toggle
-            const hamburger = document.querySelector('.hamburger');
+            const hamburger = document.getElementById('hamburgerBtn');
             const navLinks = document.querySelector('.nav-links');
-            
+
             if (hamburger && navLinks) {
                 hamburger.addEventListener('click', () => {
                     navLinks.classList.toggle('active');
                 });
-                
-                // Close menu when clicking a nav link
+
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', () => {
                         navLinks.classList.remove('active');
                     });
                 });
             }
-            
+
             // Sticky Navigation
             window.addEventListener('scroll', () => {
                 const navbar = document.querySelector('.navbar');
                 if (navbar) {
-                    if (window.scrollY > 100) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
-                    }
+                    navbar.classList.toggle('scrolled', window.scrollY > 50);
                 }
             });
-            
+
             // Back to Top Button
-            const backToTop = document.querySelector('.back-to-top');
+            const backToTop = document.getElementById('backToTop');
             if (backToTop) {
                 window.addEventListener('scroll', () => {
-                    if (window.scrollY > 300) {
-                        backToTop.classList.add('visible');
-                    } else {
-                        backToTop.classList.remove('visible');
-                    }
+                    backToTop.classList.toggle('visible', window.scrollY > 300);
                 });
-                
+
                 backToTop.addEventListener('click', () => {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
-            
+
             // Filter functionality
             const filterButtons = document.querySelectorAll('.filter-btn');
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // Update active button
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // Filter properties
-                    const filter = this.getAttribute('data-filter');
-                    filterProperties(filter);
+                    filterProperties(this.getAttribute('data-filter'));
                 });
             });
-            
-            // Set filter bar top dynamically based on actual navbar height
-            const navbar = document.querySelector('.navbar');
-            const filterBar = document.querySelector('.filter-bar');
-            if(navbar && filterBar) {
-                const navHeight = navbar.offsetHeight;
-                filterBar.style.top = navHeight + 'px';
-            }
-            
-            // Background slideshow animation
+
+            // Background slideshow
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
-            
+
             function nextSlide() {
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
             }
-            
-            // Change slide every 4 seconds
-            setInterval(nextSlide, 4000);
+            setInterval(nextSlide, 5000);
+
+            // Close modal on overlay click
+            const modalOverlay = document.getElementById('propertyModal');
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            // Close modal on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
         });
-        
-        // Load properties from localStorage
+
+        // Property data
+        const defaultProperties = [
+            { id:'1', name:'Prime Plot - Area 47',
+              location:'Lilongwe', price:8500000,
+              type:'land', status:'approved',
+              size:'800 sqm', image:'images/property1.jpg',
+              desc:'A prime residential plot in the heart of Area 47, Lilongwe. Perfect for building your dream home with easy access to main roads and amenities.'},
+            { id:'2', name:'Farm Land - Salima',
+              location:'Salima', price:25000000,
+              type:'farms', status:'approved',
+              size:'5 acres', image:'images/property2.jpg',
+              desc:'Fertile farmland in Salima district, ideal for commercial farming. Rich soil perfect for crop production with water access nearby.'},
+            { id:'3', name:'3 Bedroom House',
+              location:'Salima', price:18000000,
+              type:'residential', status:'approved',
+              size:'3 beds · 2 baths',
+              image:'images/property3.jpg',
+              desc:'A beautifully built 3-bedroom residential house with modern finishes, spacious rooms, and a secure compound.'},
+            { id:'4', name:'Commercial Plot',
+              location:'Blantyre', price:35000000,
+              type:'commercial', status:'approved',
+              size:'1200 sqm',
+              image:'images/property4.jpg',
+              desc:'A strategically located commercial plot in Blantyre, perfect for office buildings, shops, or warehouses.'},
+            { id:'5', name:'Residential Plot',
+              location:'Zomba', price:6500000,
+              type:'land', status:'approved',
+              size:'600 sqm',
+              image:'images/property5.jpg',
+              desc:'An affordable residential plot in Zomba with a serene environment, perfect for family living.'},
+            { id:'6', name:'Agriculture Farm',
+              location:'Kasungu', price:45000000,
+              type:'farms', status:'approved',
+              size:'12 acres',
+              image:'images/property6.jpg',
+              desc:'A large-scale agriculture farm in Kasungu with proven production history. Includes irrigation infrastructure.'},
+            { id:'7', name:'2 Bedroom House for Rent',
+              location:'Salima', price:120000,
+              type:'rentals', status:'approved',
+              size:'2 beds · 1 bath',
+              image:'images/two_bed_house.png',
+              desc:'A cozy 2-bedroom rental house in Salima town, close to schools and markets. Available for immediate occupation.'},
+            { id:'8', name:'Shop Space - Town Centre',
+              location:'Salima', price:85000,
+              type:'commercial', status:'approved',
+              size:'45 sqm',
+              image:'images/property2.jpg',
+              desc:'Prime shop space in Salima Town Centre with high foot traffic. Ideal for retail businesses.'},
+            { id:'9', name:'Large Farm - Dowa',
+              location:'Dowa', price:60000000,
+              type:'farms', status:'approved',
+              size:'20 acres',
+              image:'images/large_dowa_farm.png',
+              desc:'A massive farm in Dowa district offering enormous potential for agriculture and livestock. Title deed available.'},
+        ];
+
+        function getTypeLabel(type) {
+            const labels = {
+                'land': 'Land for Sale',
+                'farms': 'Farm Land',
+                'residential': 'Residential',
+                'commercial': 'Commercial',
+                'rentals': 'Rental Property'
+            };
+            return labels[type] || type;
+        }
+
+        function getTypeIcon(type) {
+            const icons = {
+                'land': '🏞️',
+                'farms': '🌾',
+                'residential': '🏠',
+                'commercial': '🏢',
+                'rentals': '🔑'
+            };
+            return icons[type] || '🏠';
+        }
+
         function loadProperties() {
             const stored = JSON.parse(localStorage.getItem('properties')) || [];
             const approved = stored.filter(p => p.status === 'approved');
-            
-            // Default sample properties shown when no real ones exist yet
-            const defaults = [
-                { id:'1', name:'Prime Plot - Area 47',
-                  location:'Lilongwe', price:8500000,
-                  type:'land', status:'approved',
-                  size:'800 sqm', image:'images/property1.jpg'},
-                { id:'2', name:'Farm Land - Salima',
-                  location:'Salima', price:25000000,
-                  type:'farms', status:'approved',
-                  size:'5 acres', image:'images/property2.jpg'},
-                { id:'3', name:'3 Bedroom House',
-                  location:'Salima', price:18000000,
-                  type:'residential', status:'approved',
-                  size:'3 beds · 2 baths',
-                  image:'images/property3.jpg'},
-                { id:'4', name:'Commercial Plot',
-                  location:'Blantyre', price:35000000,
-                  type:'commercial', status:'approved',
-                  size:'1200 sqm',
-                  image:'images/property4.jpg'},
-                { id:'5', name:'Residential Plot',
-                  location:'Zomba', price:6500000,
-                  type:'land', status:'approved',
-                  size:'600 sqm',
-                  image:'images/property5.jpg'},
-                { id:'6', name:'Agriculture Farm',
-                  location:'Kasungu', price:45000000,
-                  type:'farms', status:'approved',
-                  size:'12 acres',
-                  image:'images/property6.jpg'},
-                { id:'7', name:'2 Bedroom House for Rent',
-                  location:'Salima', price:120000,
-                  type:'rentals', status:'approved',
-                  size:'2 beds · 1 bath',
-                  image:'images/property7.jpg'},
-                { id:'8', name:'Shop Space - Town Centre',
-                  location:'Salima', price:85000,
-                  type:'commercial', status:'approved',
-                  size:'45 sqm',
-                  image:'images/property8.jpg'},
-                { id:'9', name:'Large Farm - Dowa',
-                  location:'Dowa', price:60000000,
-                  type:'farms', status:'approved',
-                  size:'20 acres',
-                  image:'images/property9.jpg'},
-            ];
-            
-            const properties = approved.length > 0 ? approved : defaults;
+            const properties = approved.length > 0 ? approved : defaultProperties;
+
             const grid = document.getElementById('propertiesGrid');
             grid.innerHTML = '';
-            
-            properties.forEach(p => {
-                grid.innerHTML += createPropertyCard(p);
+
+            properties.forEach((p, i) => {
+                grid.innerHTML += createPropertyCard(p, i);
+            });
+
+            updateResultsInfo(properties.length, 'All Properties');
+
+            // Reveal animation with stagger
+            requestAnimationFrame(() => {
+                const cards = document.querySelectorAll('.property-card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('reveal');
+                    }, index * 100);
+                });
             });
         }
-        
-        // Create property card HTML
-        function createPropertyCard(property) {
+
+        function updateResultsInfo(count, category) {
+            const info = document.getElementById('resultsInfo');
+            info.innerHTML = `Showing <span>${count}</span> ${count === 1 ? 'property' : 'properties'} in <span>${category}</span>`;
+        }
+
+        function createPropertyCard(property, index) {
             const badgeType = property.type === 'rentals' ? 'rent' : 'sale';
             const badgeText = property.type === 'rentals' ? 'For Rent' : 'For Sale';
-            const priceText = property.type === 'rentals' 
-                ? `MWK ${property.price.toLocaleString()}/month` 
-                : `MWK ${property.price.toLocaleString()}`;
-            
+            const priceText = property.type === 'rentals'
+                ? `MWK ${Number(property.price).toLocaleString()}/mo`
+                : `MWK ${Number(property.price).toLocaleString()}`;
+
             return `
                 <div class="property-card" data-category="${property.type}" data-status="${property.status}">
                     <div class="property-image">
-                        <img src="${property.image || 'images/property1.jpg'}" alt="${property.name}" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B2A4A,#0A152A)'; this.style.display='none'">
+                        <img src="${property.image || 'images/property1.jpg'}" alt="${property.name}" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B2A4A,#0A152A)'; this.style.display='none'">
                         <span class="property-badge ${badgeType}">${badgeText}</span>
+                        <div class="property-fav" onclick="toggleFav(this)" title="Save property">🤍</div>
                     </div>
                     <div class="property-content">
+                        <span class="property-type-tag">${getTypeIcon(property.type)} ${getTypeLabel(property.type)}</span>
                         <h3>${property.name}</h3>
-                        <div class="property-location">📍 ${property.location}</div>
+                        <div class="property-location">📍 ${property.location}, Malawi</div>
                         <div class="property-price">${priceText}</div>
-                        <div class="property-details">
-                            <span>${property.details || property.size || ''}</span>
+                        <div class="property-meta">
+                            <span class="meta-item"><span class="meta-icon">📐</span> ${property.size || ''}</span>
+                            <span class="meta-item"><span class="meta-icon">📋</span> ${property.type === 'rentals' ? 'Monthly' : 'Outright'}</span>
                         </div>
-                        <button class="btn-view" onclick="viewPropertyDetails('${property.id}')">View Details</button>
+                        <button class="btn-view" onclick="viewPropertyDetails('${property.id}')">
+                            View Details <span class="arrow">→</span>
+                        </button>
                     </div>
                 </div>
             `;
         }
-        
-        // Filter properties by category
+
+        function toggleFav(el) {
+            el.classList.toggle('liked');
+            el.textContent = el.classList.contains('liked') ? '❤️' : '🤍';
+        }
+
         function filterProperties(category) {
             const propertyCards = document.querySelectorAll('.property-card');
-            
-            propertyCards.forEach(card => {
+            let visibleCount = 0;
+            const categoryLabels = {
+                'all': 'All Properties',
+                'land': 'Land for Sale',
+                'farms': 'Farms',
+                'residential': 'Residential',
+                'commercial': 'Commercial',
+                'rentals': 'Rentals'
+            };
+
+            propertyCards.forEach((card, i) => {
                 const cardCategory = card.getAttribute('data-category');
-                
+
                 if (category === 'all' || cardCategory === category) {
-                    card.style.display = 'block';
+                    card.style.display = '';
+                    card.classList.remove('reveal');
+                    setTimeout(() => card.classList.add('reveal'), visibleCount * 80);
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            updateResultsInfo(visibleCount, categoryLabels[category] || category);
         }
-        
-        // View property details with modal
+
         function viewPropertyDetails(propertyId) {
             const stored = JSON.parse(localStorage.getItem('properties')) || [];
-            const defaults = [
-                { id:'1', name:'Prime Plot - Area 47',
-                  location:'Lilongwe', price:8500000,
-                  type:'land', status:'approved',
-                  size:'800 sqm', image:'images/property1.jpg'},
-                { id:'2', name:'Farm Land - Salima',
-                  location:'Salima', price:25000000,
-                  type:'farms', status:'approved',
-                  size:'5 acres', image:'images/property2.jpg'},
-                { id:'3', name:'3 Bedroom House',
-                  location:'Salima', price:18000000,
-                  type:'residential', status:'approved',
-                  size:'3 beds · 2 baths',
-                  image:'images/property3.jpg'},
-                { id:'4', name:'Commercial Plot',
-                  location:'Blantyre', price:35000000,
-                  type:'commercial', status:'approved',
-                  size:'1200 sqm',
-                  image:'images/property4.jpg'},
-                { id:'5', name:'Residential Plot',
-                  location:'Zomba', price:6500000,
-                  type:'land', status:'approved',
-                  size:'600 sqm',
-                  image:'images/property5.jpg'},
-                { id:'6', name:'Agriculture Farm',
-                  location:'Kasungu', price:45000000,
-                  type:'farms', status:'approved',
-                  size:'12 acres',
-                  image:'images/property6.jpg'},
-                { id:'7', name:'2 Bedroom House for Rent',
-                  location:'Salima', price:120000,
-                  type:'rentals', status:'approved',
-                  size:'2 beds · 1 bath',
-                  image:'images/property7.jpg'},
-                { id:'8', name:'Shop Space - Town Centre',
-                  location:'Salima', price:85000,
-                  type:'commercial', status:'approved',
-                  size:'45 sqm',
-                  image:'images/property8.jpg'},
-                { id:'9', name:'Large Farm - Dowa',
-                  location:'Dowa', price:60000000,
-                  type:'farms', status:'approved',
-                  size:'20 acres',
-                  image:'images/property9.jpg'},
-            ];
-            const all = [...stored, ...defaults];
+            const all = [...stored, ...defaultProperties];
             const property = all.find(p => p.id === propertyId);
-            if(!property) return;
-            
+            if (!property) return;
+
             const priceText = property.type === 'rentals'
-                ? 'MWK '+Number(property.price).toLocaleString()+'/month'
-                : 'MWK '+Number(property.price).toLocaleString();
-            
+                ? 'MWK ' + Number(property.price).toLocaleString() + '/month'
+                : 'MWK ' + Number(property.price).toLocaleString();
+
+            // Set modal image
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = property.image || 'images/property1.jpg';
+            modalImg.alt = property.name;
+
             document.getElementById('modalContent').innerHTML = `
-            <h2 style="color:#1B2A4A;font-family:'Playfair Display',serif;margin-bottom:10px;">${property.name}</h2>
-            <p style="color:#F0B429;font-size:1.5rem;font-weight:700;margin-bottom:10px;">${priceText}</p>
-            <p style="color:#666;margin-bottom:8px;">📍 ${property.location}</p>
-            <p style="color:#666;margin-bottom:20px;">📐 ${property.size || property.details || ''}</p>
-            <hr style="margin-bottom:20px;">
-            <p style="color:#333;line-height:1.6;">This property is listed by <strong>Dolza Real Properties & Estate Agency</strong>. Contact us today for viewing and more information.</p>`;
-            
-            document.getElementById('whatsappEnquiry').href = 'https://wa.me/265994369985?text='+encodeURIComponent('Hello Dolza, I am interested in: '+property.name+' in '+property.location+' priced at '+priceText);
-            
+                <h2>${property.name}</h2>
+                <p class="modal-price">${priceText}</p>
+                <p class="modal-location">📍 ${property.location}, Malawi</p>
+                <p class="modal-size">📐 ${property.size || property.details || ''}</p>
+                <hr class="modal-divider">
+                <p class="modal-desc">${property.desc || 'This property is listed by <strong>Dolza Real Properties & Estate Agency</strong>. Contact us today for viewing and more information.'}</p>
+            `;
+
+            document.getElementById('whatsappEnquiry').href =
+                'https://wa.me/265994369985?text=' +
+                encodeURIComponent('Hello Dolza, I am interested in: ' + property.name + ' in ' + property.location + ' priced at ' + priceText);
+
             const modal = document.getElementById('propertyModal');
-            modal.style.display = 'flex';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-        
+
         function closeModal() {
-            document.getElementById('propertyModal').style.display = 'none';
+            document.getElementById('propertyModal').classList.remove('active');
+            document.body.style.overflow = '';
         }
     </script>
 </body>
